@@ -60,7 +60,7 @@ def scan_for_obstacles(threshold):
 def run_obstacle_avoidance():
     global obstacle_detected, quit_pressed, OBSTACLE_THRESHOLD
     
-    quit_thread = Thread(target=utils.read_keyboard_for_quit, daemon=True)
+    quit_thread = Thread(target=read_keyboard_for_quit, daemon=True)
     drive_thread = Thread(target=drive_around, daemon=True)
     scan_thread = Thread(target=scan_for_obstacles, args=(OBSTACLE_THRESHOLD,), daemon=True)
     drive_thread.start()
