@@ -9,6 +9,8 @@ import random
 from constants import * # my constant values
 from threading import Thread
 
+global quit_pressed
+quit_pressed = False    # for tracking if user has hit 'quit' key
 
 # sleep for a pre-set amount of time, car will continue to do what it was doing:
 # turning, moving forward, etc. We want to avoid sleeping for more than 0.1

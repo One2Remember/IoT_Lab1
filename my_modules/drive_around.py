@@ -5,10 +5,9 @@ from my_utils import *  # my utility methods
 import picar_4wd as fc
 from threading import Thread
 
-global obstacle_detected, quit_pressed
-
+global obstacle_detected
 obstacle_detected = False    # for tracking if there is an obstacle at any point
-quit_pressed = False    # for tracking if user has hit 'quit' key
+
 
 # drive around, if there is an obstacle, pick a random direction, back up then 
 # turn to face that direction
