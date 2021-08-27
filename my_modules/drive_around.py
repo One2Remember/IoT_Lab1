@@ -1,4 +1,7 @@
+import sys
+sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import my_utils
+import picar_4wd as fc
 
 # drive around, if there is an obstacle, pick a random direction, back up then 
 # turn to face that direction
