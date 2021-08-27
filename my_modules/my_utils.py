@@ -4,7 +4,7 @@ import termios
 import asyncio
 import time
 import random
-from lab_1.picar_4wd import picar_4wd as fc
+from IoT_Lab1.picar_4wd import picar_4wd as fc
 from threading import Thread
 
 global obstacle_detected, quit_pressed, MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, ANGLE_STEP
