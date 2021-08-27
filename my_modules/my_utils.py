@@ -6,17 +6,8 @@ import termios
 import asyncio
 import time
 import random
+from constants import * # my constant values
 from threading import Thread
-
-global obstacle_detected, quit_pressed, MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, ANGLE_STEP
-
-obstacle_detected = False    # for tracking if there is an obstacle at any point
-quit_pressed = False    # for tracking if user has hit 'quit' key
-
-ANGLE_STEP = 15 # number of degrees to turn when scanning on us sensor
-MAX_ANGLE = +45 # max servo angle for ultrasonic sensor
-MIN_ANGLE = -45 # min servo angle for ultrasonic sensor 
-OBSTACLE_THRESHOLD = 30 # distance at which an obstacle is considered detected
 
 
 # sleep for a pre-set amount of time, car will continue to do what it was doing:
