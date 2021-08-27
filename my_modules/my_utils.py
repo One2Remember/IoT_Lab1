@@ -7,8 +7,7 @@ import random
 import picar_4wd as fc
 from threading import Thread
 
-global obstacle_detected, quit_pressed, MAX_ANGLE, MIN_ANGLE, 
-OBSTACLE_THRESHOLD, ANGLE_STEP
+global obstacle_detected, quit_pressed, MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, ANGLE_STEP
 
 obstacle_detected = False    # for tracking if there is an obstacle at any point
 quit_pressed = False    # for tracking if user has hit 'quit' key
