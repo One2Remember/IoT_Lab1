@@ -12,9 +12,9 @@ obstacle_detected = False    # for tracking if there is an obstacle at any point
 # drive around, if there is an obstacle, pick a random direction, back up then 
 # turn to face that direction
 def drive_around():
-    global obstacle_detected, quit_pressed
+    global obstacle_detected
     
-    while not quit_pressed:
+    while not get_quit_pressed():
         # print("OBSTACLE detected in drive_around: " + str(obstacle_detected))
         if obstacle_detected:
             fc.stop()   # stop the car
@@ -33,12 +33,12 @@ def drive_around():
 # @param threshold - range on ultrasonic sensor at which an obstacle is 
 #   considered detected   
 def scan_for_obstacles(threshold):
-    global obstacle_detected, quit_pressed, MAX_ANGLE, MIN_ANGLE
+    global obstacle_detected, MAX_ANGLE, MIN_ANGLE
     
     # set angle 0 by default
     angle = 0
     scanning_right = True   # start by scanning to the right
-    while not quit_pressed:
+    while not get_quit_pressed():
         # detect an obstacle if object detected at or beyond threshold distance
         distance = fc.get_distance_at(angle)
         obstacle_detected = distance != -2 and distance <= threshold
@@ -57,7 +57,7 @@ def scan_for_obstacles(threshold):
 # direction, back up, then turn to that direction and continue 
 # press 'q' to quit
 def run_obstacle_avoidance():
-    global obstacle_detected, quit_pressed, OBSTACLE_THRESHOLD
+    global obstacle_detected, OBSTACLE_THRESHOLD
     
     quit_thread = Thread(target=read_keyboard_for_quit, daemon=True)
     drive_thread = Thread(target=drive_around, daemon=True)
@@ -68,12 +68,11 @@ def run_obstacle_avoidance():
 
 
 def main():
-    global quit_pressed 
-    
+
     run_obstacle_avoidance()
     
     # keep running until quit_thread pressed
-    while not quit_pressed:
+    while not get_quit_pressed():
         continue
     sys.exit()
 
