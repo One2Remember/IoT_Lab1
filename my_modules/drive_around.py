@@ -33,7 +33,7 @@ def drive_around():
 #   considered detected   
 def scan_for_obstacles(threshold):
     global obstacle_detected, MAX_ANGLE, MIN_ANGLE
-    #
+    
     # set angle 0 by default
     angle = 0
     scanning_right = True   # start by scanning to the right
@@ -64,6 +64,7 @@ def run_obstacle_avoidance():
     drive_thread.start()
     scan_thread.start()
     quit_thread.start()
+    
 
 
 def main():

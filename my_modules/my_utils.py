@@ -132,6 +132,21 @@ def read_keyboard_for_quit():
     return
     
 
+# professor's example code to move forward 25 (just for testing)
+def move25():
+    speed4 = Speed(25)
+    speed4.start()
+    fc.backward(100)
+    x = 0
+    for i in range(1):
+        time.sleep(0.1)
+        speed = speed4()
+        x += speed * .1
+        print("%smm/s"%speed)
+    print("%smm"%x)
+    speed4.deinit()
+    fc.stop()
+
 # make a simple square     
 def make_square():
     forward(5,5)
