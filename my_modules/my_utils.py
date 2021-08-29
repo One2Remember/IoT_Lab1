@@ -156,6 +156,11 @@ def forward_2_5_cm(steps):
     print("%smm"%x)
     speed4.deinit()
     fc.stop()
+    
+    
+# convert polar coordinates to cartesian coordinates (using r*e^(i*theta))    
+def polar_to_cartesian(r, theta):
+    return r * exp(1j * theta)
 
 # make a simple square     
 def make_square():
