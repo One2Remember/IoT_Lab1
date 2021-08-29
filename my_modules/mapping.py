@@ -71,7 +71,7 @@ def main():
     init_environment()
     print_environment()
     
-    move25()
+    forward_2_5_cm(10)
     print_environment()
     
     # keep running until quit_thread pressed

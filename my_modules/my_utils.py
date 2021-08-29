@@ -141,16 +141,17 @@ def read_keyboard_for_quit():
     return
     
 
-# professor's example code to move forward 25 (just for testing)
-def move25():
+# slight modification of professor's example code to move car forward in increments of 2.5cm 
+# @param steps - how many multiples of 2.5cm the car should move forward
+def forward_2_5_cm(steps):
     speed4 = Speed(25)
     speed4.start()
-    fc.backward(100)
+    fc.forward(100)
     x = 0
-    for i in range(1):
+    for i in range(steps):
         time.sleep(0.1)
         speed = speed4()
-        x += speed * .1
+        x += speed * 0.1
         print("%smm/s"%speed)
     print("%smm"%x)
     speed4.deinit()
