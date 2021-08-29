@@ -1,6 +1,7 @@
 import sys
 sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
+import Speed as pi_speed
 import tty
 import termios
 import asyncio
@@ -134,7 +135,7 @@ def read_keyboard_for_quit():
 
 # professor's example code to move forward 25 (just for testing)
 def move25():
-    speed4 = Speed(25)
+    speed4 = pi_speed.Speed(25)
     speed4.start()
     fc.backward(100)
     x = 0
