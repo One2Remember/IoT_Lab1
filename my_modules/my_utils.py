@@ -1,12 +1,12 @@
 import sys
 sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
-import Speed as pi_speed
 import tty
 import termios
 import asyncio
 import time
 import random
+from speed import *
 from constants import * # my constant values
 from threading import Thread
 
