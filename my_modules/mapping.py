@@ -40,7 +40,7 @@ def update_car_position_in_environment():
     environment[environment==2] = 0
 
     # set car's new position in environment (as point)
-    set_neighborhood_around_point(car_location[0], car_location[1])
+    set_neighborhood_around_point(car_location[0], car_location[1], 2)
 
     return
     
