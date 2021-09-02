@@ -157,12 +157,13 @@ def main():
     
     # perform scan and print
     update_environment(scan_180())
+    delay(1000)
     print_environment()
     
     # move forward 25cm then repeat scan and print
-    forward_2_5_cm(10)
-    update_environment(scan_180())
-    print_environment()
+    #forward_2_5_cm(10)
+    #update_environment(scan_180())
+    #print_environment()
     
     # keep running until quit_thread pressed
     #while not get_quit_pressed():
