@@ -77,11 +77,11 @@ def print_readings(readings):
 
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
-def update_environment(readings):
+def update_environment(readings, angles=ANGLES):
     global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
     
     # get true angle measurements of each sensor reading in range (0,359)
-    true_angles = ((ANGLES * -1 + 90) + car_heading) % 360
+    true_angles = ((angles * -1 + 90) + car_heading) % 360
     
     # convert sensor readings to coordinate locations assuming car is at the
     # origin (0,0)
@@ -164,10 +164,12 @@ def main():
     init_environment()
     print_environment_to_file("initial_env")
     
+    test_angles = np.arange(-45,46,15)
+    
     # perform scan and print
-    readings = scan_angles(np.arange(-45,46,5))
+    readings = scan_angles(test_angles)
     print_readings(readings)
-    update_environment(readings)
+    update_environment(readings, test_angles)
     delay(1000)
     print_environment_to_file("env_after_180_scan")
     
