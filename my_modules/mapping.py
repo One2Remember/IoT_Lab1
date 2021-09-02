@@ -167,7 +167,7 @@ def main():
     init_environment()
     print_environment_to_file("initial_env")
     
-    test_angles = np.arange(-45,46,15)
+    test_angles = np.arange(-50,51,10)
     
     # perform scan and print
     readings = scan_angles(test_angles)
