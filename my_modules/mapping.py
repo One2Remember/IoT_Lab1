@@ -139,8 +139,8 @@ def set_neighborhood_around_obstacle(x, y):
     print(x_s)
     print(y_s)
     
-    selected_x_s = x_s[(x_s >= 0) and (x_s < ROOM_WIDTH_CM)]
-    selected_y_s = y_s[(y_s >= 0) and (y_s < ROOM_HEIGHT_CM)]
+    selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
+    selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
     print("after trim")
     print(selected_x_s)
@@ -153,7 +153,7 @@ def set_neighborhood_around_obstacle(x, y):
 def coord_in_bounds(coord):
     global ROOM_HEIGHT_CM, ROOM_WIDTH_CM
 
-    return (coord[0] >= 0 and coord[0] < ROOM_HEIGHT_CM and coord[1] >= 0 and 
+    return (coord[0] >= 0 & coord[0] < ROOM_HEIGHT_CM & coord[1] >= 0 & 
     coord[1] < ROOM_WIDTH_CM)
 
 # perform a 150 degree scan from the current location and heading
