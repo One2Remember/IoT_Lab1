@@ -6,6 +6,7 @@ import termios
 import asyncio
 import time
 import random
+from math import exp
 from picar_4wd.pwm import PWM
 from picar_4wd.adc import ADC
 from picar_4wd.pin import Pin
