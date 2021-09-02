@@ -145,7 +145,7 @@ def scan_180():
     i = 0
     for angle in ANGLES:
         distance = fc.get_distance_at(angle)
-        readings[i] = distance if distance <= OBSTACLE_THRESHOLD else INF
+        readings[i] = distance if distance > 0 and distance <= OBSTACLE_THRESHOLD else INF
         i += 1
         
     print("ending scan")
