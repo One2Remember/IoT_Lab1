@@ -141,7 +141,7 @@ def set_neighborhood_around_obstacle(x, y):
     points = np.meshgrid(selected_x_s,selected_y_s)
     print("points:\n"+str(points))
     
-    environment[selected_y_s,selected_x_s] = 1
+    environment[points] = 1
     
     
 # return whether a coordinate pair (y,x) is in room bounds    
