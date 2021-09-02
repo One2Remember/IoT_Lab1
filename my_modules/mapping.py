@@ -135,17 +135,8 @@ def set_neighborhood_around_obstacle(x, y):
     x_s = np.arange(round_x - FUZZ_FACTOR, round_x + FUZZ_FACTOR + 1, dtype=np.int32)
     y_s = np.arange(round_y - FUZZ_FACTOR, round_y + FUZZ_FACTOR + 1, dtype=np.int32)
     
-    print("before trim")
-    print(x_s)
-    print(y_s)
-    
-    print("blah")
     selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
-    
-    print("after trim")
-    print(selected_x_s)
-    print(selected_y_s)
     
     environment[selected_y_s,selected_x_s] = 1
     
@@ -154,7 +145,7 @@ def set_neighborhood_around_obstacle(x, y):
 def coord_in_bounds(coord):
     global ROOM_HEIGHT_CM, ROOM_WIDTH_CM
 
-    return (coord[0] >= 0 & coord[0] < ROOM_HEIGHT_CM & coord[1] >= 0 & 
+    return (coord[0] >= 0 and coord[0] < ROOM_HEIGHT_CM and coord[1] >= 0 and 
     coord[1] < ROOM_WIDTH_CM)
 
 # perform a 150 degree scan from the current location and heading
