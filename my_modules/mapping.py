@@ -4,6 +4,7 @@ import picar_4wd as fc
 from my_utils import *  # my utility methods
 import numpy as np
 import matplotlib.pyplot as plt
+matplotlib.use('Agg') 
 from constants import * # my constant values
 
 # track environment as 300x290 np array using the following encoding scheme:
