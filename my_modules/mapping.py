@@ -26,7 +26,7 @@ global car_location
 # the set of angles we wish to cycle through in scan_180
 global ANGLES
 
-ANGLES = np.arange(-90,91,15)
+ANGLES = np.arange(-75,76,15)
 
 # update environment by redrawing the car's current position based on 
 # car_heading and car_location
@@ -142,16 +142,16 @@ def coord_in_bounds(coord):
     return (coord[0] >= 0 and coord[0] < ROOM_HEIGHT_CM and coord[1] >= 0 and 
     coord[1] < ROOM_WIDTH_CM)
 
-# perform a 180 degree scan from the current location and heading
+# perform a 150 degree scan from the current location and heading
 # return np array of all readings at 15 degree intervals from -90 to 90
 # NOTE: if the distance is beyond our obstacle threshold, we simply say it is 
 # infinity
-def scan_180():
+def scan_angles(angles=ANGLES):
     global ANGLES, OBSTACLE_THRESHOLD, INF
     
-    readings = np.empty(len(ANGLES))
+    readings = np.empty(len(angles))
     i = 0
-    for angle in ANGLES:
+    for angle in angles:
         distance = fc.get_distance_at(angle)
         readings[i] = distance if distance > 0 and distance <= OBSTACLE_THRESHOLD else INF
         i += 1
@@ -165,7 +165,7 @@ def main():
     print_environment_to_file("initial_env")
     
     # perform scan and print
-    readings = scan_180()
+    readings = scan_angles(np.arange(-45,46,5)
     print_readings(readings)
     update_environment(readings)
     delay(1000)
