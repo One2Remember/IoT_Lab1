@@ -157,7 +157,7 @@ def scan_angles(angles=ANGLES):
     for angle in angles:
         distance = fc.get_distance_at(angle)
         readings[i] = distance if distance > 0 and distance <= OBSTACLE_THRESHOLD else INF
-        delay(10)
+        delay(55)
         i += 1
         
     return readings
