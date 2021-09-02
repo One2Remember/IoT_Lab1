@@ -165,7 +165,7 @@ def main():
     print_environment_to_file("initial_env")
     
     # perform scan and print
-    readings = scan_angles(np.arange(-45,46,5)
+    readings = scan_angles(np.arange(-45,46,5))
     print_readings(readings)
     update_environment(readings)
     delay(1000)
