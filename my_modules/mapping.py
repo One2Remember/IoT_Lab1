@@ -66,6 +66,15 @@ def print_environment_to_file(file_name_no_type):
     
     return
 
+# neatly print sensor readings     
+def print_readings(readings):
+    print("Readings:")
+    for reading in readings:
+        if reading >= INF - 1:
+            print("INF", end=' ')
+        else:
+            print(reading, end=' ')
+
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
 def update_environment(readings):
@@ -140,7 +149,6 @@ def coord_in_bounds(coord):
 def scan_180():
     global ANGLES, OBSTACLE_THRESHOLD, INF
     
-    print("starting scan")
     readings = np.empty(len(ANGLES))
     i = 0
     for angle in ANGLES:
@@ -148,7 +156,6 @@ def scan_180():
         readings[i] = distance if distance > 0 and distance <= OBSTACLE_THRESHOLD else INF
         i += 1
         
-    print("ending scan")
     return readings
 
 
@@ -159,11 +166,9 @@ def main():
     
     # perform scan and print
     readings = scan_180()
-    print("readings: " + str(readings))
-    print("updating environment")
+    print_readings(readings)
     update_environment(readings)
     delay(1000)
-    print("printing environment")
     print_environment_to_file("env_after_180_scan")
     
     # move forward 25cm then repeat scan and print
