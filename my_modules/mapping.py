@@ -37,7 +37,7 @@ def update_car_position_in_environment():
     
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
-    global environment, car_heading, car_location
+    global environment, car_heading, car_location, ROOM_HEIGHT, ROOM_WIDTH, CAR_HEIGHT
     
     # init environment with all zeros
     environment = np.zeros((ROOM_HEIGHT,ROOM_WIDTH))
@@ -65,7 +65,7 @@ def print_environment():
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
 def update_environment(readings):
-    global environment, car_heading, car_location, ANGLES
+    global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT, ROOM_WIDTH
     
     # get true angle measurements of each sensor reading in range (0,359)
     true_angles = ((ANGLES * -1 + 90) + car_heading) % 360
@@ -111,7 +111,7 @@ def update_environment(readings):
 
 # set the neighborhood of points around an obstacle as also being obstacles    
 def set_neighborhood_around_obstacle(x, y):
-    global environment, FUZZ_FACTOR
+    global environment, FUZZ_FACTOR, ROOM_HEIGHT, ROOM_WIDTH
     round_x, round_y = round(x), round(y)
     
     x_s = np.arange(round_x - FUZZ_FACTOR, round_x + FUZZ_FACTOR + 1)
@@ -124,6 +124,8 @@ def set_neighborhood_around_obstacle(x, y):
     
 # return whether a coordinate pair (y,x) is in room bounds    
 def coord_in_bounds(coord):
+    global ROOM_HEIGHT, ROOM_WIDTH
+
     return (coord[0] >= 0 and coord[0] < ROOM_HEIGHT and coord[1] >= 0 and 
     coord[1] < ROOM_WIDTH)
 
