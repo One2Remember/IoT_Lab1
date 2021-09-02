@@ -93,18 +93,14 @@ def update_environment(readings, angles=ANGLES):
     # origin (0,0)
     centered_coords = polar_to_cartesian(readings, true_angles_radians)
     
-    print("centered coords:\n" + str(centered_coords))
-    
     # convert coordinates to actual obstacle locations with knowledge of car's 
     # true location
     true_coords = np.add(centered_coords, car_location)
     
-    print("true coords:\n" + str(true_coords))
-    
     # now, use interpolation to fill in any obstacles 
     for i in range(true_coords[:,0].size - 1):
-        x_0, y_0 = true_coords[i][0], true_coords[i][1]
-        x_1, y_1 = true_coords[i+1][0], true_coords[i+1][1]
+        x_0, y_0 = round(true_coords[i][0]), round(true_coords[i][1])
+        x_1, y_1 = round(true_coords[i+1][0]), round(true_coords[i+1][1])
         
         # if x_0 is not to the left of x_1, swap the two points
         if x_0 > x_1:
