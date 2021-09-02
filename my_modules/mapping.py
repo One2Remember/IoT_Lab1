@@ -3,6 +3,7 @@ sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
 from my_utils import *  # my utility methods
 import numpy as np
+import matplotlib.pyplot as plt
 from constants import * # my constant values
 
 # track environment as 300x290 np array using the following encoding scheme:
@@ -59,6 +60,10 @@ def print_environment():
     global environment 
     
     reversed_environment = np.flip(environment, axis=0)
+    
+    plt.imshow(reversed_environment, interpolation='none')
+    plt.show()
+    
     print(reversed_environment)
     return
 
