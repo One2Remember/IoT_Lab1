@@ -152,12 +152,12 @@ def scan_180():
 def main():
     # initialize environment with car at (299,149) and print
     init_environment()
-    print_environment()
+    print_environment("initial_env")
     
     # perform scan and print
     update_environment(scan_180())
     delay(1000)
-    print_environment()
+    print_environment("env_after_180_scan")
     
     # move forward 25cm then repeat scan and print
     #forward_2_5_cm(10)
