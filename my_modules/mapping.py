@@ -23,7 +23,9 @@ global car_heading
 global car_location
 
 # the set of angles we wish to cycle through in scan_180
-global ANGLES = np.arange(-90,91,15)
+global ANGLES
+
+ANGLES = np.arange(-90,91,15)
 
 # update environment by redrawing the car's current position based on 
 # car_heading and car_location
