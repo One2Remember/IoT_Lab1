@@ -83,6 +83,8 @@ def print_readings(readings):
 def update_environment(readings, angles=ANGLES):
     global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
     
+    print("in update environment")
+    
     # get true angle measurements of each sensor reading in range (0,359)
     true_angles = ((angles * -1 + 90) + car_heading) % 360
     
@@ -90,9 +92,13 @@ def update_environment(readings, angles=ANGLES):
     # origin (0,0)
     centered_coords = polar_to_cartesian(readings, true_angles).reshape(-1,2)
     
+    print("centered coords: " + str(centered_coords))
+    
     # convert coordinates to actual obstacle locations with knowledge of car's 
     # true location
     true_coords = np.add(centered_coords, car_location)
+    
+    print("true coords: " + str(true_coords))
     
     # filter out any obstacles detected out of bounds of our array 
     #true_coords = true_coords[(true_coords[:,0] >= 0 and 
