@@ -77,6 +77,7 @@ def print_readings(readings):
             print("INF", end=' ')
         else:
             print(reading, end=' ')
+    print()
 
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
@@ -90,9 +91,9 @@ def update_environment(readings, angles=ANGLES):
     
     # convert sensor readings to coordinate locations assuming car is at the
     # origin (0,0)
-    centered_coords = polar_to_cartesian(readings, true_angles).reshape(-1,2)
+    centered_coords = polar_to_cartesian(readings, true_angles)
     
-    print("centered coords: " + str(centered_coords))
+    print("centered coords:\n" + str(centered_coords))
     
     # convert coordinates to actual obstacle locations with knowledge of car's 
     # true location
@@ -100,13 +101,8 @@ def update_environment(readings, angles=ANGLES):
     
     print("true coords: " + str(true_coords))
     
-    # filter out any obstacles detected out of bounds of our array 
-    #true_coords = true_coords[(true_coords[:,0] >= 0 and 
-    #true_coords[:,0] < ROOM_HEIGHT_CM and true_coords[:,1] >= 0 and 
-    #true_coords[:,1] < ROOM_WIDTH_CM)]
-    
     # now, use interpolation to fill in any obstacles 
-    for i in range(true_coords[:0].size - 1):
+    for i in range(true_coords[:,0].size - 1):
         x_0, y_0 = true_coords[i][0], true_coords[i][1]
         x_1, y_1 = true_coords[i+1][0], true_coords[i+1][1]
         
