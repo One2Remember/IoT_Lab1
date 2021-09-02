@@ -99,8 +99,8 @@ def update_environment(readings, angles=ANGLES):
     
     # now, use interpolation to fill in any obstacles 
     for i in range(true_coords[:,0].size - 1):
-        x_0, y_0 = round(true_coords[i][0]), round(true_coords[i][1])
-        x_1, y_1 = round(true_coords[i+1][0]), round(true_coords[i+1][1])
+        x_0, y_0 = int(round(true_coords[i][0]))), int(round(true_coords[i][1]))
+        x_1, y_1 = int(round(true_coords[i+1][0])), int(round(true_coords[i+1][1]))
         
         # if x_0 is not to the left of x_1, swap the two points
         if x_0 > x_1:
