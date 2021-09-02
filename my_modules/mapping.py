@@ -87,11 +87,11 @@ def update_environment(readings, angles=ANGLES):
     print("in update environment")
     
     # get true angle measurements of each sensor reading in range (0,359)
-    true_angles = ((angles * -1 + 90) + car_heading) % 360
+    true_angles_radians = np.radians(((angles * -1 + 90) + car_heading) % 360)
     
     # convert sensor readings to coordinate locations assuming car is at the
     # origin (0,0)
-    centered_coords = polar_to_cartesian(readings, true_angles)
+    centered_coords = polar_to_cartesian(readings, true_angles_radians)
     
     print("centered coords:\n" + str(centered_coords))
     
