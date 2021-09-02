@@ -84,8 +84,6 @@ def print_readings(readings):
 def update_environment(readings, angles=ANGLES):
     global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
     
-    print("in update environment")
-    
     # get true angle measurements of each sensor reading in range (0,359)
     true_angles_radians = np.radians(((angles * -1 + 90) + car_heading) % 360)
     
@@ -135,6 +133,8 @@ def set_neighborhood_around_obstacle(x, y):
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
     points = np.array(np.meshgrid(selected_x_s,selected_y_s)).T.reshape(-1,2)
+    
+    print("points:\n" + str(points))
     
     environment[points] = 1
     
