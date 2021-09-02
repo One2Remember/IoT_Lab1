@@ -117,7 +117,7 @@ def update_environment(readings, angles=ANGLES):
         if coord_in_bounds(true_coords[i+1]):
             set_neighborhood_around_obstacle(x_1,y_1)
         # interpolate the points between the two if both are valid 
-        if coord_in_bounds(true_coords[i]) and coord_inbounds(true_coords[i+1]):
+        if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]):
             m = (y_1 - y_0) / (x_1 - x_0)
             b = y_0 - m * x_0
             # interpolate the points between them as well
@@ -139,7 +139,6 @@ def set_neighborhood_around_obstacle(x, y):
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
     points = np.array(np.meshgrid(selected_x_s,selected_y_s)).T.reshape(-1,2)
-    print("points:\n"+str(points))
     
     environment[points] = 1
     
