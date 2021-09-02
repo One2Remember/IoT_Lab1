@@ -7,6 +7,7 @@ ANGLE_STEP = 15 # number of degrees to turn when scanning on us sensor
 MAX_ANGLE = +45 # max servo angle for ultrasonic sensor
 MIN_ANGLE = -45 # min servo angle for ultrasonic sensor 
 OBSTACLE_THRESHOLD = 200 # distance at which an obstacle is considered detected
+MIN_OBSTACLE_THRESHOLD = 10 # min distance at which an obstacle is detected
 CAR_WIDTH_CM = 20   # approximate width of car in cm
 CAR_HEIGHT_CM = 25  # approximate height of car in cm
 ROOM_WIDTH_CM = 290     # approximate width of room in cm
