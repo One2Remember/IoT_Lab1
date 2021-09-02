@@ -56,15 +56,14 @@ def init_environment():
     return
     
 # print the environment with rows reversed to match cartesian coordinates
-def print_environment():
+def print_environment_to_file(file_name_no_type):
     global environment 
     
     reversed_environment = np.flip(environment, axis=0)
     
     plt.imshow(reversed_environment, interpolation='none')
-    plt.show()
+    plt.savefig(file_name_no_type + ".png")
     
-    print(reversed_environment)
     return
 
 # update environment using the readings from a 180 deg scan from the US sensor
