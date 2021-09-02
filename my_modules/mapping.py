@@ -111,13 +111,13 @@ def update_environment(readings, angles=ANGLES):
         if coord_in_bounds(true_coords[i+1]):
             set_neighborhood_around_obstacle(x_1,y_1)
         # interpolate the points between the two if both are valid 
-        #if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]):
-        #    m = (y_1 - y_0) / (x_1 - x_0)
-        #    b = y_0 - m * x_0
-        #    # interpolate the points between them as well
-        #    for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
-        #        y = m * x + b
-        #        set_neighborhood_around_obstacle(x,y)
+        if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]):
+            m = (y_1 - y_0) / (x_1 - x_0)
+            b = y_0 - m * x_0
+            # interpolate the points between them as well
+            for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
+                y = m * x + b
+                set_neighborhood_around_obstacle(x,y)
             
     return
 
@@ -132,7 +132,7 @@ def set_neighborhood_around_obstacle(x, y):
     selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
-    points = np.array(np.meshgrid(selected_x_s,selected_y_s)).T.reshape(-1,2)
+    points = np.array(np.meshgrid(selected_x_s,selected_y_s)).reshape(-1,2)
     
     print("points:\n" + str(points))
     
