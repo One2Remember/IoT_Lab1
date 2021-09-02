@@ -159,6 +159,7 @@ def main():
     
     # perform scan and print
     readings = scan_180()
+    print("readings: " + str(readings))
     print("updating environment")
     update_environment(readings)
     delay(1000)
