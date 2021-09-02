@@ -99,7 +99,7 @@ def update_environment(readings, angles=ANGLES):
     # true location
     true_coords = np.add(centered_coords, car_location)
     
-    print("true coords: " + str(true_coords))
+    print("true coords:\n" + str(true_coords))
     
     # now, use interpolation to fill in any obstacles 
     for i in range(true_coords[:,0].size - 1):
@@ -134,9 +134,15 @@ def set_neighborhood_around_obstacle(x, y):
     
     x_s = np.arange(round_x - FUZZ_FACTOR, round_x + FUZZ_FACTOR + 1)
     y_s = np.arange(round_y - FUZZ_FACTOR, round_y + FUZZ_FACTOR + 1)
+    
+    print("before trim")
+    print(x_s)
+    print(y_s)
+    
     x_s = x_s[x_s >= 0 and x_s < ROOM_WIDTH_CM]
     y_s = y_s[y_s >=0 and y_s < ROOM_HEIGHT_CM]
     
+    print("after trim")
     print(x_s)
     print(y_s)
     
