@@ -136,7 +136,7 @@ def coord_in_bounds(coord):
 def scan_180():
     global ANGLES, OBSTACLE_THRESHOLD, INF
     
-    readings = np.empty(12)
+    readings = np.empty(len(ANGLES))
     i = 0
     for angle in ANGLES:
         distance = fc.get_distance_at(angle)
