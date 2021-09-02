@@ -34,7 +34,7 @@ ANGLES = np.arange(-75,76,15)
 # update environment by redrawing the car's current position based on 
 # car_heading and car_location
 def update_car_position_in_environment():
-    global environment
+    global environment, car_location
     
     # reset the car's position so no car in environment
     environment[environment==2] = 0
@@ -60,6 +60,8 @@ def init_environment():
     car_heading = 0 
     # set car initial location to top of grid, middle position
     car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
+    # set car's initial location
+    update_car_position_in_environment()
     
     return
     
