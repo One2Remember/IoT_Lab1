@@ -138,10 +138,9 @@ def set_neighborhood_around_obstacle(x, y):
     print("before trim")
     print(x_s)
     print(y_s)
-    print(x_s >= 0 and x_s < ROOM_WIDTH_CM)
     
-    x_s = x_s[x_s >= 0 and x_s < ROOM_WIDTH_CM]
-    y_s = y_s[y_s >= 0 and y_s < ROOM_HEIGHT_CM]
+    x_s = x_s[(x_s >= 0) and (x_s < ROOM_WIDTH_CM)]
+    y_s = y_s[(y_s >= 0) and (y_s < ROOM_HEIGHT_CM)]
     
     print("after trim")
     print(x_s)
