@@ -139,6 +139,7 @@ def set_neighborhood_around_obstacle(x, y):
     print(x_s)
     print(y_s)
     
+    print("blah")
     selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
