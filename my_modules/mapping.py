@@ -138,6 +138,9 @@ def set_neighborhood_around_obstacle(x, y):
     selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
     selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
     
+    points = np.meshgrid(selected_x_s,selected_y_s)
+    print("points:\n"+str(points))
+    
     environment[selected_y_s,selected_x_s] = 1
     
     
