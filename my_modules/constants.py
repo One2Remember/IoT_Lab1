@@ -11,4 +11,4 @@ CAR_WIDTH_CM = 20   # approximate width of car in cm
 CAR_HEIGHT_CM = 25  # approximate height of car in cm
 ROOM_WIDTH_CM = 290     # approximate width of room in cm
 ROOM_HEIGHT_CM = 300    # approximate height of room in cm
-FUZZ_FACTOR = 3 # the number of cm around an obstacle that we want to mark as also being an obstacle
+FUZZ_FACTOR = 5 # the number of cm around an obstacle that we want to mark as also being an obstacle
