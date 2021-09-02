@@ -85,7 +85,7 @@ def update_environment(readings, angles=ANGLES):
     global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR
     
     # get true angle measurements of each sensor reading in range (0,359)
-    true_angles_radians = np.radians(((angles * -1 + 90) + car_heading) % 360)
+    true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
     
     # convert sensor readings to coordinate locations assuming car is at the
     # origin (0,0)
