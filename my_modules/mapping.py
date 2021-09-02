@@ -79,9 +79,9 @@ def update_environment(readings):
     true_coords = np.add(centered_coords, car_location)
     
     # filter out any obstacles detected out of bounds of our array 
-    true_coords = true_coords[(true_coords[:,0] >= 0 and 
-    true_coords[:,0] < ROOM_HEIGHT_CM and true_coords[:,1] >= 0 and 
-    true_coords[:,1] < ROOM_WIDTH_CM)]
+    #true_coords = true_coords[(true_coords[:,0] >= 0 and 
+    #true_coords[:,0] < ROOM_HEIGHT_CM and true_coords[:,1] >= 0 and 
+    #true_coords[:,1] < ROOM_WIDTH_CM)]
     
     # now, use interpolation to fill in any obstacles 
     for i in range(true_coords[:0].size() - 1):
