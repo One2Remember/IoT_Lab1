@@ -6,7 +6,7 @@ import termios
 import asyncio
 import time
 import random
-from math import exp
+import numpy as np
 from picar_4wd.pwm import PWM
 from picar_4wd.adc import ADC
 from picar_4wd.pin import Pin
@@ -159,9 +159,9 @@ def forward_2_5_cm(steps):
     fc.stop()
     
     
-# convert polar coordinates to cartesian coordinates (using r*e^(i*theta))    
+# convert polar coordinates to cartesian coordinates    
 def polar_to_cartesian(r, theta):
-    return r * exp(1j * theta)
+    return (r * np.cos(theta), r * np.sin(theta))
 
 # make a simple square     
 def make_square():
