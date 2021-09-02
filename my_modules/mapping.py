@@ -84,7 +84,7 @@ def update_environment(readings):
     #true_coords[:,1] < ROOM_WIDTH_CM)]
     
     # now, use interpolation to fill in any obstacles 
-    for i in range(true_coords[:0].size() - 1):
+    for i in range(true_coords[:0].size - 1):
         x_0, y_0 = true_coords[i][0], true_coords[i][1]
         x_1, y_1 = true_coords[i+1][0], true_coords[i+1][1]
         
