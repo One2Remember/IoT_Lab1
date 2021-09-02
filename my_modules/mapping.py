@@ -21,7 +21,7 @@ global environment
 global car_heading
 
 # tracks the car's location (specifically the center of the ultrasonic sensor). 
-# The car starts at (25,149), representing the car with the spoilers pressed 
+# The car starts at (149,25), representing the car with the spoilers pressed 
 # against the bottom of the map, in the center, and 25 being the y position of 
 # the ultrasonic sensor
 global car_location
@@ -34,8 +34,13 @@ ANGLES = np.arange(-75,76,15)
 # update environment by redrawing the car's current position based on 
 # car_heading and car_location
 def update_car_position_in_environment():
+    global environment
+    
+    # reset the car's position so no car in environment
+    environment[environment==2] = 0
 
-    # CODE GOES HERE
+    # set car's new position in environment (as point)
+    set_neighborhood_around_point(car_location[0], car_location[1])
 
     return
     
@@ -54,7 +59,7 @@ def init_environment():
     # set car initial heading to 0
     car_heading = 0 
     # set car initial location to top of grid, middle position
-    car_location = np.array([CAR_HEIGHT_CM, ROOM_WIDTH_CM // 2])
+    car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
     
     return
     
@@ -106,10 +111,10 @@ def update_environment(readings, angles=ANGLES):
     
         # set the current point as obstacle if valid
         if coord_in_bounds(true_coords[i]):
-            set_neighborhood_around_obstacle(x_0,y_0)
+            set_neighborhood_around_point(x_0,y_0)
         # set the next point as obstacle if valid 
         if coord_in_bounds(true_coords[i+1]):
-            set_neighborhood_around_obstacle(x_1,y_1)
+            set_neighborhood_around_point(x_1,y_1)
         # interpolate the points between the two if both are valid 
         if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]):
             m = (y_1 - y_0) / (x_1 - x_0)
@@ -117,12 +122,12 @@ def update_environment(readings, angles=ANGLES):
             # interpolate the points between them as well
             for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
                 y = m * x + b
-                set_neighborhood_around_obstacle(x,y)
+                set_neighborhood_around_point(x,y)
             
     return
 
 # set the neighborhood of points around an obstacle as also being obstacles    
-def set_neighborhood_around_obstacle(x, y):
+def set_neighborhood_around_point(x, y, character=1):
     global environment, FUZZ_FACTOR, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
     round_x, round_y = round(x), round(y)
     
@@ -134,7 +139,7 @@ def set_neighborhood_around_obstacle(x, y):
     
     points = np.array(np.meshgrid(selected_x_s,selected_y_s)).T.reshape(-1,2)
     
-    environment[points[:,1],points[:,0]] = 1
+    environment[points[:,1],points[:,0]] = character
     
     
 # return whether a coordinate pair (y,x) is in room bounds    
