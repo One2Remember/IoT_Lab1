@@ -161,7 +161,9 @@ def forward_2_5_cm(steps):
     
 # convert polar coordinates to cartesian coordinates    
 def polar_to_cartesian(r, theta):
-    return (r * np.cos(theta), r * np.sin(theta))
+    x_s = r * np.cos(theta)
+    y_s = r * np.sin(theta)
+    return np.column_stack((x_s, y_s))
 
 # make a simple square     
 def make_square():
