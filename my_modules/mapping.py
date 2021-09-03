@@ -166,6 +166,8 @@ def scan_angles(angles=ANGLES):
         delay(100)
         i += 1
         
+    servo.set_angle(0)
+    
     return readings
 
 
@@ -174,7 +176,7 @@ def main():
     init_environment()
     print_environment_to_file("initial_env")
     
-    test_angles = np.arange(-90,91,5)
+    test_angles = np.arange(-75,76,5)
     
     # perform scan and print
     readings = scan_angles(test_angles)

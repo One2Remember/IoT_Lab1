@@ -19,8 +19,11 @@ from picar_4wd.utils import *
 from constants import * # my constant values
 from threading import Thread
 
-global quit_pressed
+global quit_pressed, servo
 quit_pressed = False    # for tracking if user has hit 'quit' key
+
+# init servo
+servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
 
 # for getting if quit has been pressed
 def get_quit_pressed():
