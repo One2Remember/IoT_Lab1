@@ -89,7 +89,7 @@ def print_readings(readings):
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
 def update_environment(readings, angles=ANGLES):
-    global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR
+    global environment, car_heading, car_location, ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
     
     # get true angle measurements of each sensor reading in range (0,359)
     true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
@@ -118,7 +118,7 @@ def update_environment(readings, angles=ANGLES):
         if coord_in_bounds(true_coords[i+1]):
             set_neighborhood_around_point(x_1,y_1)
         # interpolate the points between the two if both are valid 
-        if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]) and x_1 != x_0:
+        if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]) and x_1 != x_0 and abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD:
             m = (y_1 - y_0) / (x_1 - x_0)
             b = y_0 - m * x_0
             # interpolate the points between them as well

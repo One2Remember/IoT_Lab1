@@ -1,4 +1,4 @@
-global MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, ANGLE_STEP, CAR_WIDTH_CM, CAR_HEIGHT_CM, ROOM_WIDTH_CM, ROOM_HEIGHT_CM, OBSTACLE, NO_OBSTACLE, FUZZ_FACTOR
+global MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, ANGLE_STEP, CAR_WIDTH_CM, CAR_HEIGHT_CM, ROOM_WIDTH_CM, ROOM_HEIGHT_CM, OBSTACLE, NO_OBSTACLE, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
 
 NO_OBSTACLE = 0 # if there is no obstacle in the environment at a specific loc
 OBSTACLE = 1    # if there is an obstacle in the environment at a specific loc
@@ -13,3 +13,4 @@ CAR_HEIGHT_CM = 25  # approximate height of car in cm
 ROOM_WIDTH_CM = 290     # approximate width of room in cm
 ROOM_HEIGHT_CM = 300    # approximate height of room in cm
 FUZZ_FACTOR = 5 # the number of cm around an obstacle that we want to mark as also being an obstacle
+INTERPOLATION_THRESHOLD = 30 # the number of cm difference we allow between two adjacent distances to interpolate
