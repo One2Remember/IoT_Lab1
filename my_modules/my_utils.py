@@ -23,7 +23,7 @@ global quit_pressed, servo
 quit_pressed = False    # for tracking if user has hit 'quit' key
 
 # init servo
-servo = Servo(PWM("P0"), offset=ultrasonic_servo_offset)
+servo = Servo(PWM("P0"))
 
 # for getting if quit has been pressed
 def get_quit_pressed():
