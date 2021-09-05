@@ -159,7 +159,9 @@ def coord_in_bounds(coord):
 # NOTE: if the distance is beyond our obstacle threshold, we simply say it is 
 # infinity
 def scan_angles(angles=ANGLES):
-    global ANGLES, OBSTACLE_THRESHOLD, INF, MIN_OBSTACLE_THRESHOLD
+    global ANGLES, OBSTACLE_THRESHOLD, INF, MIN_OBSTACLE_THRESHOLD, SERVO_BIAS
+    
+    angles = angles - SERVO_BIAS    # correct for servo bias
     
     readings = np.empty(len(angles))
     i = 0
