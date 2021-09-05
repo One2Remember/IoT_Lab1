@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
-from my_modules.my_utils import *  # my utility methods
+from my_utils import *  # my utility methods
 from constants import *  # my constant values
 import numpy as np
 import matplotlib
