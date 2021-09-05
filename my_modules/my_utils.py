@@ -19,7 +19,6 @@ from picar_4wd.utils import *
 from constants import * # my constant values
 from threading import Thread
 
-global quit_pressed, servo
 quit_pressed = False    # for tracking if user has hit 'quit' key
 
 # init servo
@@ -89,7 +88,7 @@ def turn(deg):
         deg = 360 - deg
     # calculate the number of steps to turn (different for left vs right because
     # of misaligned wheels - time should be in ratio of 23:20)
-    if(turn_right):
+    if turn_right:
         delay_steps = round(deg * (5 + (1/3)))
     else:
         delay_steps = round(deg * 4.8)
