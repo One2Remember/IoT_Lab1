@@ -29,6 +29,8 @@ global car_location
 # the set of angles we wish to cycle through in scan_180
 global ANGLES
 
+
+
 ANGLES = np.arange(-75, 76, 15)
 
 
@@ -48,7 +50,7 @@ def update_car_position_in_environment():
 
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
-    global environment, car_heading, car_location, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, CAR_HEIGHT_CM
+    global environment, car_heading, car_location, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION
 
     # init environment with all zeros
     environment = np.zeros((ROOM_HEIGHT_CM, ROOM_WIDTH_CM))
@@ -64,6 +66,10 @@ def init_environment():
     car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
     # set car's initial location
     update_car_position_in_environment()
+
+    # set the destination to a point near the opposite side of the room, and about 3/4 of the way to the right
+    DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, 280])
+    environment[DESTINATION[1], DESTINATION[0]] = 3
 
     return
 
@@ -166,7 +172,7 @@ def update_environment(readings, angles=ANGLES):
         # enough together
         if (x_1 != x_0
                 and coord_in_bounds(true_coords[i-1])
-                and coord_in_bounds(true_coords[i]) 
+                and coord_in_bounds(true_coords[i])
                 and coord_in_bounds(true_coords[i+1])
                 and abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD
                 and abs(readings[i-1] - readings[i] <= INTERPOLATION_THRESHOLD)):
