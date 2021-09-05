@@ -69,7 +69,7 @@ def init_environment():
 
     # set the destination to a point near the opposite side of the room, and about 3/4 of the way to the right
     DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, 280])
-    set_neighborhood_around_point(DESTINATION[1], DESTINATION[0], 3)
+    set_neighborhood_around_point(DESTINATION[0], DESTINATION[1], 3)
 
     return
 
