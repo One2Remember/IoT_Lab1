@@ -117,8 +117,11 @@ def update_environment(readings, angles=ANGLES):
         # set the next point as obstacle if valid 
         if coord_in_bounds(true_coords[i+1]):
             set_neighborhood_around_point(x_1,y_1)
-        # interpolate the points between the two if both are valid 
-        if coord_in_bounds(true_coords[i]) and coord_in_bounds(true_coords[i+1]) and x_1 != x_0 and abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD:
+        # interpolate the points between the two if both are valid and close 
+        # enough together
+        if (coord_in_bounds(true_coords[i]) and 
+        coord_in_bounds(true_coords[i+1]) and x_1 != x_0 and 
+        abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD):
             m = (y_1 - y_0) / (x_1 - x_0)
             b = y_0 - m * x_0
             # interpolate the points between them as well
@@ -162,7 +165,8 @@ def scan_angles(angles=ANGLES):
     i = 0
     for angle in angles:
         distance = fc.get_distance_at(angle)
-        readings[i] = distance if distance >= MIN_OBSTACLE_THRESHOLD and distance <= OBSTACLE_THRESHOLD else INF
+        readings[i] = distance if (distance >= MIN_OBSTACLE_THRESHOLD and 
+        distance <= OBSTACLE_THRESHOLD) else INF
         delay(100)
         i += 1
         
