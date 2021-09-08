@@ -97,50 +97,8 @@ def print_readings(readings):
     print()
 
 
-# # update environment using the readings from a scan from the US sensor
-# # along with interpolation
-# def update_environment(readings, angles=ANGLES):
-#     global environment, car_heading, car_location
-#     global ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
-#
-#     # get true angle measurements of each sensor reading in range (0,359)
-#     true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
-#
-#     # convert sensor readings to coordinate locations assuming car is at the
-#     # origin (0,0)
-#     centered_coords = polar_to_cartesian(readings, true_angles_radians)
-#
-#     # convert coordinates to actual obstacle locations with knowledge of car's
-#     # true location
-#     true_coords = np.add(centered_coords, car_location)
-#
-#     # now, use interpolation to fill in any obstacles
-#     for i in range(true_coords[:, 0].size - 1):
-#         x_0, y_0 = int(round(true_coords[i][0])), int(round(true_coords[i][1]))
-#         x_1, y_1 = int(round(true_coords[i + 1][0])), int(round(true_coords[i + 1][1]))
-#
-#         # if x_0 is not to the left of x_1, swap the two points
-#         if x_0 > x_1:
-#             x_0, y_0, x_1, y_1 = x_1, y_1, x_0, y_0
-#
-#         # set the current point as obstacle if valid
-#         if coord_in_bounds(true_coords[i]):
-#             set_neighborhood_around_point(x_0, y_0)
-#         # set the next point as obstacle if valid
-#         if coord_in_bounds(true_coords[i + 1]):
-#             set_neighborhood_around_point(x_1, y_1)
-#         # interpolate the points between the two if both are valid and close
-#         # enough together
-#         if (coord_in_bounds(true_coords[i]) and
-#                 coord_in_bounds(true_coords[i + 1]) and x_1 != x_0 and
-#                 abs(readings[i] - readings[i + 1]) <= INTERPOLATION_THRESHOLD):
-#             m = (y_1 - y_0) / (x_1 - x_0)
-#             b = y_0 - m * x_0
-#             # interpolate the points between them as well
-#             for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
-#                 y = m * x + b
-#                 set_neighborhood_around_point(x, y)
-#     return
+
+   
 
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
@@ -229,6 +187,25 @@ def scan_angles(angles=ANGLES):
 
     return readings
 
+
+#numpy_array<int, 30x30> downsize (numpy_array<300x300>):
+#	Use a 10 x 10 mask to determine if there is an obstacle in any point within these 10x10 submatrices, and if so mark that point in the new array as containing obstacle. Otherwise there is no obstacle.
+	
+#	Return the new 30x30 array
+
+# reads the environment and uses a 10x10 mask to downsize the 300x300 array to a 30x30 array     
+def downsize_environment():
+    downsized_environment = np.zeros((30,30))
+    for i in range(	
+	
+#numpy_array<boolean, 900x900> construct_adjacency_matrix(downsized_numpy_array<int, 30x30>):
+#	for each pair of points:
+#		generate_line_points(coordinate_a, coordinate_b)
+#		if any of the points contain an obstacle, the corresponding point in the adjacency graph is a 0,
+#		otherwise it is 1
+		
+#numpy_array<(int: x,y)> generate_line_points(coordinate_a, coordinate_b):
+#	generate the closest set of points that lie between these two coordinates
 
 def main():
     # initialize environment with car at (299,149) and print
