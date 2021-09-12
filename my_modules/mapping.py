@@ -349,11 +349,11 @@ def go_to(next_coordinate):
 
 # protocol to run car
 def main():
-    global EPSILON, ANGLES, DESTINATION, car_location 
+    global EPSILON, ANGLES, DESTINATION, car_location, environment
     
     # initialize environment with car and print
     init_environment()
-    print_graph_to_file("initial_env")
+    print_graph_to_file("initial_env", environment, True)
     
     # transform the destination to the corresponding node in our downsized 
     # environment's adjacency graph 
