@@ -147,7 +147,7 @@ def read_keyboard_for_quit():
 # @param steps - how many multiples of 2.5cm the car should move forward
 def forward_2_5_cm(steps):
     fc.forward(100)
-    delay(steps * 100)
+    delay(int(round(steps * 100 / 3.264)))
     fc.stop()  
     
 # convert polar coordinates to cartesian coordinates    
