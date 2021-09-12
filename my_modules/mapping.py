@@ -351,7 +351,7 @@ def go_to(next_coordinate):
         steps = steps % US_RANGE_STEPS
         # calculate our new actual destination based on this new distance
         actual_distance = steps * 2.5
-        actual_destination = numpy.add(car_location, polar_to_cartesian(actual_distance, car_heading))
+        actual_destination = np.add(car_location, polar_to_cartesian(actual_distance, car_heading))
     
     print("moving 2.5cm steps: " + str(steps))
     
