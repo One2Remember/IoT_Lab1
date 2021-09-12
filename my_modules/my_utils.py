@@ -101,15 +101,6 @@ def turn(deg):
         fc.turn_left(100)
     delay(delay_steps)  # delay 
     fc.stop()   # stop car
-
-# turn toward a particular coordinate    
-def turn_toward(coordinate, car_heading, car_location):
-    # calculate new heading 
-    delta_x = coordinate[0] - car_location[0]
-    delta_y = coordinate[1] - car_location[1]
-    new_heading = np.degrees(np.arctan2(delta_y, delta_x))
-    # turn toward that new heading 
-    turn(new_heading - car_heading)
     
 # move the car forward
 # @param power - power level to move forward

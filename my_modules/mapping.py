@@ -314,10 +314,24 @@ def dist_nodes(a,b):
 
 # compute the distance between the car's current location and the goal    
 def distance_to(coordinate):
-    global DESTINATION, car_location
+    global car_location
     x_1, y_1 = car_location[0], car_location[1]
-    x_2, y_2 = DESTINATION[0], DESTINATION[1]
-    return ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
+    x_2, y_2 = coordinate[0], coordinate[1]
+    distance = ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
+    print("distance calculated to goal: " + str(distance))
+    return distance
+
+# turn toward a particular coordinate    
+def turn_toward(coordinate):
+    global car_heading, car_location
+    # calculate new heading 
+    delta_x = coordinate[0] - car_location[0]
+    delta_y = coordinate[1] - car_location[1]
+    new_heading = np.degrees(np.arctan2(delta_y, delta_x))
+    # turn toward that new heading 
+    turn(new_heading - car_heading)
+    # set car_heading
+    car_heading = new_heading
 
 # go to the next coordinate, while watching for pedestrians or stop signs
 def go_to(next_coordinate):
@@ -325,10 +339,14 @@ def go_to(next_coordinate):
     global STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
     
     # turn toward next coordinate 
-    turn_toward(next_coordinate, car_heading, car_location)
+    turn_toward(next_coordinate)
+    
+    print("turned toward: " + next_coordinate)
     
     # calculate the number of 2.5cm steps it will take to get from here to there
     steps = int(round(distance_to(DESTINATION) / 2.5))
+    
+    print("moving 2.5cm steps: " + str(steps))
     
     # proceed toward that destination while watching for pedestrians or stop signs 
     while steps > 0:
@@ -345,6 +363,8 @@ def go_to(next_coordinate):
         else:
             forward_2_5_cm(12)
             steps -= 12
+    # update car's location
+    car_location = next_coordinate
 
 
 # protocol to run car
@@ -401,7 +421,7 @@ def main():
         shortest_path = nx.astar_path(graph, graph_car_location, 
             graph_destination, heuristic=dist_nodes)
             
-        print("computed shortest graph")    
+        print("computed shortest path: " + str(shortest_path))    
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
