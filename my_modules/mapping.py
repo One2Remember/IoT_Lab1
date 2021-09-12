@@ -385,7 +385,7 @@ def main():
             graph_destination, heuristic=dist_nodes)
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
-        next_coordinates = downsized_coordinate_to_full_size_coordinate(
+        next_coordinate = downsized_coordinate_to_full_size_coordinate(
             adjacency_position_to_downsized_coordinates(shortest_path[0]))
         # go to the next coordinate while watching for pedestrians/stop signs
         go_to(next_coordinate)
