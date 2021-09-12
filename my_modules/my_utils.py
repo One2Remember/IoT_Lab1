@@ -67,6 +67,16 @@ def read_key(getchar_fn=None):
         return c1
     c3 = getchar()
     return chr(0x10 + ord(c3) - 65)
+    
+# neatly print sensor readings
+def print_readings(readings):
+    print("Readings:")
+    for reading in readings:
+        if reading >= INF - 1:
+            print("INF", end=' ')
+        else:
+            print(reading, end=' ')
+    return
 
 # turns the car any number of degrees in [-inf, inf]
 # NOTE: this needs to be updated because just sleeping doesn't do it

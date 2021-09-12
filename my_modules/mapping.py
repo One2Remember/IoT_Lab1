@@ -29,7 +29,7 @@ global car_location
 
 # the set of angles we wish to cycle through in scan_180
 global ANGLES
-ANGLES = np.arange(-75, 76, 15)
+ANGLES = np.arange(-90, 91, 15)
 
 # the destination cell
 global DESTINATION
@@ -40,19 +40,6 @@ global stop_sign
 
 # whether there is a pedestrian in view
 global pedestrian
-
-# update environment by redrawing the car's current position based on
-# car_heading and car_location
-def update_car_position_in_environment():
-    global environment, car_location
-
-    # reset the car's position so no car in environment
-    environment[environment == 2] = 0
-
-    # set car's new position in environment (as point)
-    set_neighborhood_around_point(car_location[0], car_location[1], 2)
-
-    return
 
 
 # initialize environment as empty room (walls as obstacles)
@@ -99,16 +86,19 @@ def print_graph_to_file(file_name_no_type, graph, reversed=True):
 
     return
 
+    
+# update environment by redrawing the car's current position based on
+# car_heading and car_location
+def update_car_position_in_environment():
+    global environment, car_location
 
-# neatly print sensor readings
-def print_readings(readings):
-    print("Readings:")
-    for reading in readings:
-        if reading >= INF - 1:
-            print("INF", end=' ')
-        else:
-            print(reading, end=' ')
-    print()
+    # reset the car's position so no car in environment
+    environment[environment == 2] = 0
+
+    # set car's new position in environment (as point)
+    set_neighborhood_around_point(car_location[0], car_location[1], 2)
+
+    return
 
 
 # update environment using the readings from a 180 deg scan from the US sensor
@@ -344,7 +334,7 @@ def go_to(next_coordinate):
     print("turned toward: " + str(next_coordinate))
     
     # calculate the number of 2.5cm steps it will take to get from here to there
-    steps = int(round(distance_to(DESTINATION) / 2.5))
+    steps = int(round(distance_to(next_coordinate) / 2.5))
     
     print("moving 2.5cm steps: " + str(steps))
     
@@ -365,6 +355,7 @@ def go_to(next_coordinate):
             steps -= 12
     # update car's location
     car_location = next_coordinate
+    update_car_position_in_environment()
 
 
 # protocol to run car
