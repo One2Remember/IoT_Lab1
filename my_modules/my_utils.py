@@ -154,25 +154,4 @@ def polar_to_cartesian(r, theta):
     x_s = r * np.cos(theta)
     y_s = r * np.sin(theta)
     return np.column_stack((x_s, y_s))
-
-# make a simple square     
-def make_square():
-    forward(5,5)
-    delay(200)
-    turn(90)
-    delay(200)
-    backward(5,5)
-    delay(200)
-    turn(90)
-    delay(200)
-    
-# test method, simply makes a square over and over again by going forward,
-# turning right 90, going backward, then turning right 90 repeatedly
-def test_square():
-    global quit_pressed
-    
-    quit_thread = Thread(target=read_keyboard_for_quit, daemon=True)
-    square_thread = Thread(target=make_square, daemon=True)
-    quit_thread.start()
-    square_thread.start()
      

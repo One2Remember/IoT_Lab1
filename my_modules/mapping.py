@@ -87,13 +87,15 @@ def init_environment():
     return
 
 
-# print the environment with rows reversed to match cartesian coordinates
-def print_environment_to_file(file_name_no_type):
+# print the graph (default environment) with rows reversed to match cartesian 
+# coordinates
+def print_graph_to_file(file_name_no_type, graph=environment, reversed=True):
     global environment
 
-    reversed_environment = np.flip(environment, axis=0)
+    if reversed:
+        graph = np.flip(graph, axis=0)
 
-    plt.imshow(reversed_environment, interpolation='none')
+    plt.imshow(graph, interpolation='none')
     plt.savefig(file_name_no_type + ".png")
 
     return
@@ -352,7 +354,7 @@ def main():
     
     # initialize environment with car and print
     init_environment()
-    print_environment_to_file("initial_env")
+    print_graph_to_file("initial_env")
     
     # transform the destination to the corresponding node in our downsized 
     # environment's adjacency graph 
@@ -372,7 +374,7 @@ def main():
         print("performed reading")
         
         # print environment
-        print_environment_to_file("env_after_scan_" + str(num_scans))
+        print_graph_to_file("env_after_scan_" + str(num_scans), environment, True)
         
         print("printed environment")
         
@@ -404,8 +406,18 @@ def main():
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
-        next_coordinate = downsized_coordinate_to_full_size_coordinate(
-            adjacency_position_to_downsized_coordinates(shortest_path[0]))
+        next_position = shortest_path[0]
+        
+        print("next position: " + next_position)
+        
+        next_downsized_coord = adjacency_position_to_downsized_coordinates(next_position)
+        
+        print("next downsized coord: " + next_downsized_coord)
+        
+        next_coordinate = downsized_coordinate_to_full_size_coordinate(next_downsized_coord)
+        
+        print("next full coord: " + next_coordinate)
+        
         # go to the next coordinate while watching for pedestrians/stop signs
         go_to(next_coordinate)
 
