@@ -60,8 +60,8 @@ def init_environment():
     environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
     environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
 
-    # set car initial heading to 0
-    car_heading = 0
+    # set car initial heading to 90 (pointing north)
+    car_heading = 90
     # set car initial location to top of grid, middle position
     car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
     # set car's initial location
@@ -108,7 +108,7 @@ def update_environment(readings, angles=ANGLES):
     global ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
 
     # get true angle measurements of each sensor reading in range (0,359)
-    true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
+    true_angles_radians = np.radians((angles + car_heading) % 360)
 
     # convert sensor readings to coordinate locations assuming car is at the
     # origin (0,0)
@@ -319,7 +319,11 @@ def turn_toward(coordinate):
     delta_y = coordinate[1] - car_location[1]
     new_heading = np.degrees(np.arctan2(delta_y, delta_x))
     # turn toward that new heading 
-    turn(int(round(new_heading - (car_heading + 90))))
+    degrees_to_turn = int(round(new_heading - car_heading))
+    
+    print("turning " + str(degrees_to_turn) + " degrees")
+    
+    turn(degrees_to_turn)
     car_heading = new_heading
 
 # go to the next coordinate, while watching for pedestrians or stop signs
