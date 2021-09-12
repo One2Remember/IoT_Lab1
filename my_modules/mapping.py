@@ -319,9 +319,9 @@ def turn_toward(coordinate):
     # calculate new heading 
     delta_x = coordinate[0] - car_location[0]
     delta_y = coordinate[1] - car_location[1]
-    new_heading = np.degrees(np.arctan2(delta_y, delta_x))
+    new_heading = int(round(np.degrees(np.arctan2(delta_y, delta_x)))) % 360
     # turn toward that new heading 
-    degrees_to_turn = int(round(new_heading - car_heading))
+    degrees_to_turn = new_heading - car_heading
     
     print("turning " + str(degrees_to_turn) + " degrees")
     
