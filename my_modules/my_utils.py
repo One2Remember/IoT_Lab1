@@ -101,6 +101,15 @@ def turn(deg):
         fc.turn_left(100)
     delay(delay_steps)  # delay 
     fc.stop()   # stop car
+
+# turn toward a particular coordinate    
+def turn_toward(coordinate, car_heading, car_location):
+    # calculate new heading 
+    delta_x = coordinate[0] - car_location[0]
+    delta_y = coordinate[1] - car_location[1]
+    new_heading = np.degrees(np.atan2(delta_y, delta_x))
+    # turn toward that new heading 
+    turn(new_heading - car_heading)
     
 # move the car forward
 # @param power - power level to move forward
@@ -119,17 +128,6 @@ def backward(power, steps):
     fc.stop()   # stop car
     return
     
-# TODO
-# move the car forward some given number of cm
-def forward_dist(cm):
-    return
-    
-    
-# TODO
-# move the car backward some given number of cm
-def backward_dist(cm):
-    return
-    
     
 # poll keyboard for q key to quit program (set quit_pressed to True)     
 def read_keyboard_for_quit():
@@ -144,22 +142,12 @@ def read_keyboard_for_quit():
     return
     
 
-# slight modification of professor's example code to move car forward in increments of 2.5cm 
+# my adaptation of professors code to move forward by some multiple of 2.5cm
 # @param steps - how many multiples of 2.5cm the car should move forward
 def forward_2_5_cm(steps):
-    speed4 = Speed(25)
-    speed4.start()
     fc.forward(100)
-    x = 0
-    for i in range(steps):
-        time.sleep(0.1)
-        speed = speed4()
-        x += speed * 0.1
-        print("%smm/s"%speed)
-    print("%smm"%x)
-    speed4.deinit()
-    fc.stop()
-    
+    delay(steps * 100)
+    fc.stop()  
     
 # convert polar coordinates to cartesian coordinates    
 def polar_to_cartesian(r, theta):

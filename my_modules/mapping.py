@@ -28,11 +28,16 @@ global car_location
 
 # the set of angles we wish to cycle through in scan_180
 global ANGLES
-
-
-
 ANGLES = np.arange(-75, 76, 15)
 
+# the destination cell
+global DESTINATION
+
+# whether there is a stop sign in view
+global stop_sign
+
+# whether there is a pedestrian in view
+global pedestrian
 
 # update environment by redrawing the car's current position based on
 # car_heading and car_location
@@ -50,7 +55,12 @@ def update_car_position_in_environment():
 
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
-	global environment, car_heading, car_location, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION
+	global (environment, car_heading, car_location, ROOM_HEIGHT_CM,
+        ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION, stop_sign, pedestrian)
+        
+    # assume no stop sign or pedestrian 
+    stop_sign = False 
+    pedestrian = False 
 
 	# init environment with all zeros
 	environment = np.zeros((ROOM_HEIGHT_CM, ROOM_WIDTH_CM))
@@ -67,8 +77,9 @@ def init_environment():
 	# set car's initial location
 	update_car_position_in_environment()
 
-	# set the destination to a point near the opposite side of the room, and about 3/4 of the way to the right
-	DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, 280])
+	# set the destination to a point near the opposite side of the room, and
+    # about 3/4 of the way to the right
+	DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
 	set_neighborhood_around_point(DESTINATION[0], DESTINATION[1], 3)
 
 	return
@@ -96,9 +107,6 @@ def print_readings(readings):
 			print(reading, end=' ')
 	print()
 
-
-
-   
 
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
@@ -187,15 +195,16 @@ def scan_angles(angles=ANGLES):
 
 	return readings
 
-
-#numpy_array<int, 30x30> downsize (numpy_array<300x300>):
-#	Use a 10 x 10 mask to determine if there is an obstacle in any point within these 10x10 submatrices, and if so mark that point in the new array as containing obstacle. Otherwise there is no obstacle.
-	
-#	Return the new 30x30 array
-
-# reads the environment and uses a 10x10 mask to downsize the 300x300 array to a 30x30 array	 
+# parses the environment and returns a downsized version 	 
 def downsize_environment():
-	return
+    global environment, DOWNSIZED_ENV_SIDE_LENGTH
+    downsized_environment = environment.reshape(DOWNSIZED_ENV_SIDE_LENGTH, environment.shape[0]//DOWNSIZED_ENV_SIDE_LENGTH,DOWNSIZED_ENV_SIDE_LENGTH,environment.shape[1]//DOWNSIZED_ENV_SIDE_LENGTH).sum(axis=1).sum(axis=2)
+
+    for i in range(downsized_environment.shape[0]):
+        for j in range(downsized_environment.shape[1]):
+            downsized_environment[i,j] = 1 if downsized_environment[i,j] > 0 else 0
+
+    return downsized_environment
 	
 # construct an adjacency matrix from our downsized, 30x30 environment
 def construct_adjacency_matrix(downsized_environment):
@@ -203,8 +212,8 @@ def construct_adjacency_matrix(downsized_environment):
     adjacency_matrix = np.ones((r*c, r*c))
     for a in range(r*c):
         for b in range(a,r*c):
-            x_1, y_1 = adjacency_position_to_coordinates(a)
-            x_2, y_2 = adjacency_position_to_coordinates(b)
+            x_1, y_1 = adjacency_position_to_downsized_coordinates(a)
+            x_2, y_2 = adjacency_position_to_downsized_coordinates(b)
             if (x_1, y_1) != (x_2, y_2):
                 points = generate_line_points((x_1, y_1), (x_2, y_2))
                 for point in points:
@@ -219,7 +228,7 @@ def construct_adjacency_matrix(downsized_environment):
 # coordinates
 # uses a python implementation of Bresenham's Line Algorithm as described in
 # the wikipedia page: https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
-# and built upon an adapted then slightly modified version of a C++
+# and built upon an adapted then modified version of a C++
 # implementation for this algorithm given by stackoverflow user dogear at:
 # https://stackoverflow.com/questions/16028752/how-do-i-get-all-the-points-between-two-point-objects/34142336
 def generate_line_points(a, b):
@@ -259,57 +268,125 @@ def generate_line_points(a, b):
                 error -= 1
     return points
 
-# given a position in an adjacency matrix, return the x,y coordinates corresponding to that position
-def adjacency_position_to_coordinates(position):
+# given a position in an adjacency matrix, return the x,y coordinates 
+# corresponding to that position
+def adjacency_position_to_downsized_coordinates(position):
     global DOWNSIZED_ENV_SIDE_LENGTH
     return position % DOWNSIZED_ENV_SIDE_LENGTH, position // DOWNSIZED_ENV_SIDE_LENGTH
-    
-def coordinate_to_adjacency_position(coordinates):
+
+# transform a downsized coordinate to its appropriate node number in the 
+# adjacency graph    
+def downsized_coordinate_to_adjacency_position(coordinates):
     global DOWNSIZED_ENV_SIDE_LENGTH
     return coordinates[1] * DOWNSIZED_ENV_SIDE_LENGTH + coordinates[0]
 
-# given two nodes in an adjacency graph, compute the distance between them)
+# given the a coordinate location in the downsized, environment, return the 
+# corresponding coordinate of the cell in the center of the corresponding full
+# sized environment    
+def downsized_coordinate_to_full_size_coordinate(coord):
+    global DOWNSIZED_ENV_SIDE_LENGTH, environment
+    
+    # the scaling factor we used to downsize our environment
+    scaling_factor = environment.shape[0] // DOWNSIZED_ENV_SIDE_LENGTH
+    # the offset we are going to use to center the new coordinate 
+    offset = scaling_factor // 2
+    # compute and return new x, new y
+    return coord[0] * scaling_factor + offset, coord[1] * scaling_factor + offset 
+
+# inverse of the above operation    
+def full_size_coordinate_to_downsized_coordinate(coord):
+    global DOWNSIZED_ENV_SIDE_LENGTH, environment
+    
+    # the scaling factor we used to downsize our environment
+    scaling_factor = environment.shape[0] // DOWNSIZED_ENV_SIDE_LENGTH
+    # compute and return new x, new y
+    return coord[0] // scaling_factor, coord[1] // scaling_factor
+
+# given two nodes in a graph built from an adjacency matrix, compute the 
+# distance between them
 def dist_nodes(a,b):
-    (x_1,y_1) = adjacency_position_to_coordinates(a)
-    (x_2,y_2) = adjacency_position_to_coordinates(b)
+    (x_1,y_1) = adjacency_position_to_downsized_coordinates(a)
+    (x_2,y_2) = adjacency_position_to_downsized_coordinates(b)
     return ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
 
 # compute the distance between the car's current location and the goal    
-def distance_to_goal():
-    global destination, CAR_LOCATION
+def distance_to(coordinate=DESTINATION):
+    global DESTINATION, car_location
     x_1, y_1 = car_location[0], car_location[1]
     x_2, y_2 = DESTINATION[0], DESTINATION[1]
     return ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
 
+# go to the next coordinate, while watching for pedestrians or stop signs
+def go_to(next_coordinate):
+    global stop_sign, pedestrian, STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
+    
+    # turn toward next coordinate 
+    turn_toward(next_coordinate)
+    
+    # calculate the number of 2.5cm steps it will take to get from here to there
+    steps = int(math.round(distance_to() / 2.5))
+    
+    # proceed toward that destination while watching for pedestrians or stop signs 
+    while steps > 0:
+        # if we see a stop sign, wait for 5 seconds 
+        if stop_sign:  
+            delay(STOP_SIGN_DELAY)
+        # keep waiting for a second as long as there's a pedestrian around
+        while pedestrian:
+            delay(PEDESTRIAN_DELAY_INCR)
+        # move forward up to 1 foot (or less if objective is less than 1 foot away)
+        if steps <= 12:
+            forward_2_5_cm(steps)
+            steps = 0
+        else:
+            forward_2_5_cm(12)
+            steps -= 12
+
+
 # protocol to run car
 def main():
-    global EPSILON 
-	# initialize environment with car at (299,149) and print
+    global EPSILON, ANGLES, DESTINATION, car_location 
+    
+    # transform the destination to the corresponding node in our downsized 
+    # environment's adjacency graph 
+    graph_destination = downsized_coordinate_to_adjacency_position(
+        full_size_coordinate_to_downsized_coordinate(DESTINATION))
+    
+	# initialize environment with car and print
 	init_environment()
 	print_environment_to_file("initial_env")
 
-	test_angles = np.arange(-75, 76, 5)
-
-	# perform scan and print
-	readings = scan_angles(test_angles)
-	print_readings(readings)
-	update_environment(readings, test_angles)
-	delay(1000)
-	print_environment_to_file("env_after_180_scan")
-
-    #while distance_to_goal() > EPSILON:
-        #downsized_environment = downsize_environment(environment)
-        #adjacency_matrix = construct_adjacency_matrix(environment)
+	# init number of scans we've done to 0
+    num_scans = 0
+    
+    # main loop runs until we reach our goal 
+    while distance_to_goal() > EPSILON:
+        # perform scan of the environment 
+        readings = scan_angles(ANGLES)
+        update_environment(readings, ANGLES)
+        num_scans += 1
+        # print environment
+        print_environment_to_file("env_after_scan_" + str(num_scans))
+        # construct downsized version of environment
+        downsized_environment = downsize_environment(environment)
+        # construct adjacency matrix from downsized environment
+        adjacency_matrix = construct_adjacency_matrix(environment)
         # build graph from matrix
-        #graph = nx.convert_matrix.from_numpy_array(adjacency_matrix)
-        # compute shortest path from graph
-        #shortest_path = nx.astar_path(graph, 15, 890, heuristic=dist_nodes)
-        #next_coordinates = adjacency_position_to_coordinates(shortest_path[0])
-        #while pedestrian:
-        #   delay(1000)
-        #if stop_sign:
-        #   delay(3000)
-        #go_to(next_coordinate)
+        graph = nx.convert_matrix.from_numpy_array(adjacency_matrix)
+        # transform the current location coordinates to the corresponding node 
+        # in our downsized environment's adjacency graph 
+        graph_car_location = downsized_coordinate_to_adjacency_position(
+            full_size_coordinate_to_downsized_coordinate(car_location))
+        # compute shortest path from graph (as sequence of nodes in adjacency 
+        # graph) given the current location and destination 
+        shortest_path = nx.astar_path(graph, graph_car_location, 
+            graph_destination, heuristic=dist_nodes)
+        # strip off only the next node in the path and transform it to downsized 
+        # coordinate then to full sized coordinate 
+        next_coordinates = downsized_coordinate_to_full_size_coordinate(
+            adjacency_position_to_downsized_coordinates(shortest_path[0]))
+        # go to the next coordinate while watching for pedestrians/stop signs
+        go_to(next_coordinate)
 
 
 if __name__ == "__main__":
