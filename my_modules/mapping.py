@@ -29,7 +29,7 @@ global car_location
 
 # the set of angles we wish to cycle through in scan_180
 global ANGLES
-ANGLES = np.arange(-90, 91, 15)
+ANGLES = np.arange(-90, 91, 5)
 
 # the destination cell
 global DESTINATION
