@@ -361,7 +361,7 @@ def main():
     num_scans = 0
     
     # main loop runs until we reach our goal 
-    while distance_to(DESINTATION) > EPSILON:
+    while distance_to(DESTINATION) > EPSILON:
         # perform scan of the environment 
         readings = scan_angles(ANGLES)
         update_environment(readings, ANGLES)
