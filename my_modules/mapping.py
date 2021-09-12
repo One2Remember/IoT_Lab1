@@ -35,7 +35,7 @@ ANGLES = np.arange(-90, 91, 5)
 
 # the destination cell
 global DESTINATION
-DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
+DESTINATION = np.array([ROOM_WIDTH_CM * 9 // 10, ROOM_HEIGHT_CM * 9 // 10])
 
 # whether there is a stop sign in view
 global stop_sign
@@ -388,7 +388,8 @@ def main():
         update_environment(readings, ANGLES)
         num_scans += 1
         
-        print("performed readings: " + str(readings))
+        print("readings:")
+        print_readings(readings)
         
         # print environment
         print_graph_to_file(os.path.join(cur_time, "env_after_scan_" + str(num_scans)), environment, True)
