@@ -32,6 +32,7 @@ ANGLES = np.arange(-75, 76, 15)
 
 # the destination cell
 global DESTINATION
+DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
 
 # whether there is a stop sign in view
 global stop_sign
@@ -80,7 +81,6 @@ def init_environment():
 
     # set the destination to a point near the opposite side of the room, and
     # about 3/4 of the way to the right
-    DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
     set_neighborhood_around_point(DESTINATION[0], DESTINATION[1], 3)
 
     return
@@ -348,14 +348,14 @@ def go_to(next_coordinate):
 def main():
     global EPSILON, ANGLES, DESTINATION, car_location 
     
+    # initialize environment with car and print
+    init_environment()
+    print_environment_to_file("initial_env")
+    
     # transform the destination to the corresponding node in our downsized 
     # environment's adjacency graph 
     graph_destination = downsized_coordinate_to_adjacency_position(
         full_size_coordinate_to_downsized_coordinate(DESTINATION))
-    
-    # initialize environment with car and print
-    init_environment()
-    print_environment_to_file("initial_env")
 
     # init number of scans we've done to 0
     num_scans = 0
