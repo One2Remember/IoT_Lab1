@@ -2,8 +2,8 @@ import sys
 
 sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
-from my_utils import *	# my utility methods
-from constants import *	 # my constant values
+from my_utils import *  # my utility methods
+from constants import *  # my constant values
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -42,139 +42,137 @@ global pedestrian
 # update environment by redrawing the car's current position based on
 # car_heading and car_location
 def update_car_position_in_environment():
-	global environment, car_location
+    global environment, car_location
 
-	# reset the car's position so no car in environment
-	environment[environment == 2] = 0
+    # reset the car's position so no car in environment
+    environment[environment == 2] = 0
 
-	# set car's new position in environment (as point)
-	set_neighborhood_around_point(car_location[0], car_location[1], 2)
+    # set car's new position in environment (as point)
+    set_neighborhood_around_point(car_location[0], car_location[1], 2)
 
-	return
+    return
 
 
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
     # import globs
-	global environment, car_heading, car_location, ROOM_HEIGHT_CM
+    global environment, car_heading, car_location, ROOM_HEIGHT_CM
     global ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION, stop_sign, pedestrian
-    
-    
     
     # assume no stop sign or pedestrian 
     stop_sign = False 
     pedestrian = False 
 
-	# init environment with all zeros
-	environment = np.zeros((ROOM_HEIGHT_CM, ROOM_WIDTH_CM))
-	# set 4 walls as being obstacles 
-	environment[0] = np.ones(ROOM_WIDTH_CM)
-	environment[-1] = np.ones(ROOM_WIDTH_CM)
-	environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
-	environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
+    # init environment with all zeros
+    environment = np.zeros((ROOM_HEIGHT_CM, ROOM_WIDTH_CM))
+    # set 4 walls as being obstacles 
+    environment[0] = np.ones(ROOM_WIDTH_CM)
+    environment[-1] = np.ones(ROOM_WIDTH_CM)
+    environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
+    environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
 
-	# set car initial heading to 0
-	car_heading = 0
-	# set car initial location to top of grid, middle position
-	car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
-	# set car's initial location
-	update_car_position_in_environment()
+    # set car initial heading to 0
+    car_heading = 0
+    # set car initial location to top of grid, middle position
+    car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
+    # set car's initial location
+    update_car_position_in_environment()
 
-	# set the destination to a point near the opposite side of the room, and
+    # set the destination to a point near the opposite side of the room, and
     # about 3/4 of the way to the right
-	DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
-	set_neighborhood_around_point(DESTINATION[0], DESTINATION[1], 3)
+    DESTINATION = np.array([ROOM_WIDTH_CM * 3 // 4, ROOM_HEIGHT_CM * 9 // 10])
+    set_neighborhood_around_point(DESTINATION[0], DESTINATION[1], 3)
 
-	return
+    return
 
 
 # print the environment with rows reversed to match cartesian coordinates
 def print_environment_to_file(file_name_no_type):
-	global environment
+    global environment
 
-	reversed_environment = np.flip(environment, axis=0)
+    reversed_environment = np.flip(environment, axis=0)
 
-	plt.imshow(reversed_environment, interpolation='none')
-	plt.savefig(file_name_no_type + ".png")
+    plt.imshow(reversed_environment, interpolation='none')
+    plt.savefig(file_name_no_type + ".png")
 
-	return
+    return
 
 
 # neatly print sensor readings
 def print_readings(readings):
-	print("Readings:")
-	for reading in readings:
-		if reading >= INF - 1:
-			print("INF", end=' ')
-		else:
-			print(reading, end=' ')
-	print()
+    print("Readings:")
+    for reading in readings:
+        if reading >= INF - 1:
+            print("INF", end=' ')
+        else:
+            print(reading, end=' ')
+    print()
 
 
 # update environment using the readings from a 180 deg scan from the US sensor
 # along with interpolation
 def update_environment(readings, angles=ANGLES):
-	global environment, car_heading, car_location
-	global ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
+    global environment, car_heading, car_location
+    global ANGLES, ROOM_HEIGHT_CM, ROOM_WIDTH_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
 
-	# get true angle measurements of each sensor reading in range (0,359)
-	true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
+    # get true angle measurements of each sensor reading in range (0,359)
+    true_angles_radians = np.radians((angles + 90 + car_heading) % 360)
 
-	# convert sensor readings to coordinate locations assuming car is at the
-	# origin (0,0)
-	centered_coords = polar_to_cartesian(readings, true_angles_radians)
+    # convert sensor readings to coordinate locations assuming car is at the
+    # origin (0,0)
+    centered_coords = polar_to_cartesian(readings, true_angles_radians)
 
-	# convert coordinates to actual obstacle locations with knowledge of car's
-	# true location
-	true_coords = np.add(centered_coords, car_location)
+    # convert coordinates to actual obstacle locations with knowledge of car's
+    # true location
+    true_coords = np.add(centered_coords, car_location)
 
-	# now, use interpolation to fill in any obstacles (ignoring edge readings)
-	for i in range(1,true_coords[:, 0].size - 1):
-		x_0, y_0 = int(round(true_coords[i][0])), int(round(true_coords[i][1]))
-		x_1, y_1 = int(round(true_coords[i + 1][0])), int(round(true_coords[i + 1][1]))
+    # now, use interpolation to fill in any obstacles (ignoring edge readings)
+    for i in range(1,true_coords[:, 0].size - 1):
+        x_0, y_0 = int(round(true_coords[i][0])), int(round(true_coords[i][1]))
+        x_1, y_1 = int(round(true_coords[i + 1][0])), int(round(true_coords[i + 1][1]))
 
-		# if x_0 is not to the left of x_1, swap the two points
-		if x_0 > x_1:
-			x_0, y_0, x_1, y_1 = x_1, y_1, x_0, y_0
+        # if x_0 is not to the left of x_1, swap the two points
+        if x_0 > x_1:
+            x_0, y_0, x_1, y_1 = x_1, y_1, x_0, y_0
 
-		# interpolate the points between the two if both are valid and close
-		# enough together
-		if (x_1 != x_0
-				and coord_in_bounds(true_coords[i-1])
-				and coord_in_bounds(true_coords[i])
-				and coord_in_bounds(true_coords[i+1])
-				and abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD
-				and abs(readings[i-1] - readings[i] <= INTERPOLATION_THRESHOLD)):
-			m = (y_1 - y_0) / (x_1 - x_0)
-			b = y_0 - m * x_0
-			# interpolate the points between them as well
-			for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
-				y = m * x + b
-				set_neighborhood_around_point(x, y)
-	return
+        # interpolate the points between the two if both are valid and close
+        # enough together
+        if (x_1 != x_0
+                and coord_in_bounds(true_coords[i-1])
+                and coord_in_bounds(true_coords[i])
+                and coord_in_bounds(true_coords[i+1])
+                and abs(readings[i] - readings[i+1]) <= INTERPOLATION_THRESHOLD
+                and abs(readings[i-1] - readings[i] <= INTERPOLATION_THRESHOLD)):
+            m = (y_1 - y_0) / (x_1 - x_0)
+            b = y_0 - m * x_0
+            # interpolate the points between them as well
+            for x in range(x_0 + 1, x_1, FUZZ_FACTOR):
+                y = m * x + b
+                set_neighborhood_around_point(x, y)
+    return
 
 
 # set the neighborhood of points around an obstacle as also being obstacles
 def set_neighborhood_around_point(x, y, character=1):
-	global environment, FUZZ_FACTOR, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
-	round_x, round_y = round(x), round(y)
+    global environment, FUZZ_FACTOR, ROOM_HEIGHT_CM, ROOM_WIDTH_CM
+    round_x, round_y = round(x), round(y)
 
-	x_s = np.arange(round_x - FUZZ_FACTOR, round_x + FUZZ_FACTOR + 1, dtype=np.int32)
-	y_s = np.arange(round_y - FUZZ_FACTOR, round_y + FUZZ_FACTOR + 1, dtype=np.int32)
+    x_s = np.arange(round_x - FUZZ_FACTOR, round_x + FUZZ_FACTOR + 1, dtype=np.int32)
+    y_s = np.arange(round_y - FUZZ_FACTOR, round_y + FUZZ_FACTOR + 1, dtype=np.int32)
 
-	selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
-	selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
+    selected_x_s = x_s[(x_s >= 0) & (x_s < ROOM_WIDTH_CM)]
+    selected_y_s = y_s[(y_s >= 0) & (y_s < ROOM_HEIGHT_CM)]
 
-	points = np.array(np.meshgrid(selected_x_s, selected_y_s)).T.reshape(-1, 2)
+    points = np.array(np.meshgrid(selected_x_s, selected_y_s)).T.reshape(-1, 2)
 
-	environment[points[:, 1], points[:, 0]] = character
+    environment[points[:, 1], points[:, 0]] = character
 
 
-# return whether a coordinate pair (y,x) is in room bounds	  
+# return whether a coordinate pair (y,x) is in room bounds    
 def coord_in_bounds(coord):
-	global ROOM_HEIGHT_CM, ROOM_WIDTH_CM
+    global ROOM_HEIGHT_CM, ROOM_WIDTH_CM
 
-	return 0 <= coord[0] < ROOM_HEIGHT_CM and 0 <= coord[1] < ROOM_WIDTH_CM
+    return 0 <= coord[0] < ROOM_HEIGHT_CM and 0 <= coord[1] < ROOM_WIDTH_CM
 
 
 # perform a 150 degree scan from the current location and heading
@@ -182,23 +180,23 @@ def coord_in_bounds(coord):
 # NOTE: if the distance is beyond our obstacle threshold, we simply say it is 
 # infinity
 def scan_angles(angles=ANGLES):
-	global ANGLES, OBSTACLE_THRESHOLD, INF, MIN_OBSTACLE_THRESHOLD, SERVO_BIAS
+    global ANGLES, OBSTACLE_THRESHOLD, INF, MIN_OBSTACLE_THRESHOLD, SERVO_BIAS
 
-	angles = angles - SERVO_BIAS  # correct for servo bias
+    angles = angles - SERVO_BIAS  # correct for servo bias
 
-	readings = np.empty(len(angles))
-	i = 0
-	for angle in angles:
-		distance = fc.get_distance_at(angle)
-		readings[i] = distance if MIN_OBSTACLE_THRESHOLD <= distance <= OBSTACLE_THRESHOLD else INF
-		delay(100)
-		i += 1
+    readings = np.empty(len(angles))
+    i = 0
+    for angle in angles:
+        distance = fc.get_distance_at(angle)
+        readings[i] = distance if MIN_OBSTACLE_THRESHOLD <= distance <= OBSTACLE_THRESHOLD else INF
+        delay(100)
+        i += 1
 
-	servo.set_angle(0)
+    servo.set_angle(0)
 
-	return readings
+    return readings
 
-# parses the environment and returns a downsized version 	 
+# parses the environment and returns a downsized version     
 def downsize_environment():
     global environment, DOWNSIZED_ENV_SIDE_LENGTH
     downsized_environment = environment.reshape(DOWNSIZED_ENV_SIDE_LENGTH, environment.shape[0]//DOWNSIZED_ENV_SIDE_LENGTH,DOWNSIZED_ENV_SIDE_LENGTH,environment.shape[1]//DOWNSIZED_ENV_SIDE_LENGTH).sum(axis=1).sum(axis=2)
@@ -208,7 +206,7 @@ def downsize_environment():
             downsized_environment[i,j] = 1 if downsized_environment[i,j] > 0 else 0
 
     return downsized_environment
-	
+    
 # construct an adjacency matrix from our downsized, 30x30 environment
 def construct_adjacency_matrix(downsized_environment):
     r,c = downsized_environment.shape
@@ -355,11 +353,11 @@ def main():
     graph_destination = downsized_coordinate_to_adjacency_position(
         full_size_coordinate_to_downsized_coordinate(DESTINATION))
     
-	# initialize environment with car and print
-	init_environment()
-	print_environment_to_file("initial_env")
+    # initialize environment with car and print
+    init_environment()
+    print_environment_to_file("initial_env")
 
-	# init number of scans we've done to 0
+    # init number of scans we've done to 0
     num_scans = 0
     
     # main loop runs until we reach our goal 
@@ -393,7 +391,7 @@ def main():
 
 
 if __name__ == "__main__":
-	try:
-		main()
-	finally:
-		fc.stop()
+    try:
+        main()
+    finally:
+        fc.stop()
