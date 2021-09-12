@@ -311,7 +311,7 @@ def dist_nodes(a,b):
     return ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
 
 # compute the distance between the car's current location and the goal    
-def distance_to(coordinate=DESTINATION):
+def distance_to(coordinate):
     global DESTINATION, car_location
     x_1, y_1 = car_location[0], car_location[1]
     x_2, y_2 = DESTINATION[0], DESTINATION[1]
@@ -325,7 +325,7 @@ def go_to(next_coordinate):
     turn_toward(next_coordinate)
     
     # calculate the number of 2.5cm steps it will take to get from here to there
-    steps = int(math.round(distance_to() / 2.5))
+    steps = int(math.round(distance_to(DESTINATION) / 2.5))
     
     # proceed toward that destination while watching for pedestrians or stop signs 
     while steps > 0:
