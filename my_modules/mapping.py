@@ -55,8 +55,8 @@ def update_car_position_in_environment():
 
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
-	global (environment, car_heading, car_location, ROOM_HEIGHT_CM,
-        ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION, stop_sign, pedestrian)
+	global environment, car_heading, car_location, ROOM_HEIGHT_CM
+    global ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION, stop_sign, pedestrian
         
     # assume no stop sign or pedestrian 
     stop_sign = False 
