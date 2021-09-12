@@ -367,7 +367,7 @@ def go_to(next_coordinate):
 def main():
     global EPSILON, ANGLES, DESTINATION, car_location, environment
     
-    cur_time = time.strftime("%m:%d:_%H:%M:%S", time.localtime())
+    cur_time = time.strftime("%m:%d_%H:%M:%S", time.localtime())
     os.mkdir(cur_time)
     
     # initialize environment with car and print
@@ -388,7 +388,7 @@ def main():
         update_environment(readings, ANGLES)
         num_scans += 1
         
-        print("performed reading")
+        print("performed readings: " + str(readings))
         
         # print environment
         print_graph_to_file(os.path.join(cur_time, "env_after_scan_" + str(num_scans)), environment, True)
