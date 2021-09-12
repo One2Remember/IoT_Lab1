@@ -387,8 +387,7 @@ def main():
         readings = scan_angles(ANGLES)
         update_environment(readings, ANGLES)
         num_scans += 1
-        
-        print("readings:")
+
         print_readings(readings)
         
         # print environment
