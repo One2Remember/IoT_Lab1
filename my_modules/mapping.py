@@ -341,7 +341,7 @@ def go_to(next_coordinate):
     # turn toward next coordinate 
     turn_toward(next_coordinate)
     
-    print("turned toward: " + next_coordinate)
+    print("turned toward: " + str(next_coordinate))
     
     # calculate the number of 2.5cm steps it will take to get from here to there
     steps = int(round(distance_to(DESTINATION) / 2.5))
