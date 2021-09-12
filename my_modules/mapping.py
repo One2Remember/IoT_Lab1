@@ -64,8 +64,8 @@ def init_environment():
 
     # set car initial heading to 90 (pointing north)
     car_heading = 90
-    # set car initial location to top of grid, middle position
-    car_location = np.array([ROOM_WIDTH_CM // 2, CAR_HEIGHT_CM])
+    # set car initial location to bottom right corner of room (one car's space away from left wall)
+    car_location = np.array([CAR_WIDTH_CM + (CAR_WIDTH_CM // 2), CAR_HEIGHT_CM])
     # set car's initial location
     update_car_position_in_environment()
 
