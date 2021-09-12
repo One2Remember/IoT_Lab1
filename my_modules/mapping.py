@@ -320,10 +320,11 @@ def distance_to(coordinate):
 
 # go to the next coordinate, while watching for pedestrians or stop signs
 def go_to(next_coordinate):
-    global stop_sign, pedestrian, STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
+    global stop_sign, pedestrian, car_heading, car_location
+    global STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
     
     # turn toward next coordinate 
-    turn_toward(next_coordinate)
+    turn_toward(next_coordinate, car_heading, car_location)
     
     # calculate the number of 2.5cm steps it will take to get from here to there
     steps = int(math.round(distance_to(DESTINATION) / 2.5))
@@ -367,14 +368,29 @@ def main():
         readings = scan_angles(ANGLES)
         update_environment(readings, ANGLES)
         num_scans += 1
+        
+        print("performed reading")
+        
         # print environment
         print_environment_to_file("env_after_scan_" + str(num_scans))
+        
+        print("printed environment")
+        
         # construct downsized version of environment
         downsized_environment = downsize_environment()
+        
+        print("downsized environment")
+        
         # construct adjacency matrix from downsized environment
         adjacency_matrix = construct_adjacency_matrix(downsized_environment)
+        
+        print("constructed adjacency matrix")
+        
         # build graph from matrix
         graph = nx.convert_matrix.from_numpy_array(adjacency_matrix)
+        
+        print("built graph")
+        
         # transform the current location coordinates to the corresponding node 
         # in our downsized environment's adjacency graph 
         graph_car_location = downsized_coordinate_to_adjacency_position(
@@ -383,6 +399,9 @@ def main():
         # graph) given the current location and destination 
         shortest_path = nx.astar_path(graph, graph_car_location, 
             graph_destination, heuristic=dist_nodes)
+            
+        print("computed shortest graph")    
+            
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
         next_coordinate = downsized_coordinate_to_full_size_coordinate(
