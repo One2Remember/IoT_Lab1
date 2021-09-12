@@ -331,7 +331,11 @@ def turn_toward(coordinate):
 # go to the next coordinate, while watching for pedestrians or stop signs
 def go_to(next_coordinate):
     global stop_sign, pedestrian, car_heading, car_location
-    global STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
+    global STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR, US_RANGE_STEPS
+    
+    # assume we are actually going to travel to next coordinate (may not be the 
+    # case if it is too far)
+    actual_destination = next_coordinate
     
     # turn toward next coordinate 
     turn_toward(next_coordinate)
@@ -340,6 +344,14 @@ def go_to(next_coordinate):
     
     # calculate the number of 2.5cm steps it will take to get from here to there
     steps = int(round(distance_to(next_coordinate) / 2.5))
+    
+    # if the number of steps is too large (exceeds our US's range), we will only 
+    # go as many steps as our ultrasonic sensor range can detect
+    if steps > US_RANGE_STEPS:
+        steps = steps % US_RANGE_STEPS
+        # calculate our new actual destination based on this new distance
+        actual_distance = steps * 2.5
+        actual_destination = polar_to_cartesian(actual_distance, car_heading) + car_location
     
     print("moving 2.5cm steps: " + str(steps))
     
@@ -358,8 +370,8 @@ def go_to(next_coordinate):
         else:
             forward_2_5_cm(12)
             steps -= 12
-    # update car's location
-    car_location = next_coordinate
+    
+    car_location = actual_destination
     update_car_position_in_environment()
 
 

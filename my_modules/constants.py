@@ -1,6 +1,6 @@
 global NO_OBSTACLE, OBSTACLE, INF, ANGLE_STEP, MAX_ANGLE, MIN_ANGLE, OBSTACLE_THRESHOLD, MIN_OBSTACLE_THRESHOLD
 global SERVO_BIAS, CAR_WIDTH_CM, CAR_HEIGHT_CM, ROOM_WIDTH_CM, ROOM_HEIGHT_CM, FUZZ_FACTOR, INTERPOLATION_THRESHOLD
-global DOWNSIZED_ENV_SIDE_LENGTH, EPSILON, STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR
+global DOWNSIZED_ENV_SIDE_LENGTH, EPSILON, STOP_SIGN_DELAY, PEDESTRIAN_DELAY_INCR, US_RANGE_STEPS
 
 NO_OBSTACLE = 0     # if there is no obstacle in the environment at a specific loc
 OBSTACLE = 1        # if there is an obstacle in the environment at a specific loc
@@ -21,3 +21,4 @@ DOWNSIZED_ENV_SIDE_LENGTH = 15  # the side length of the downsized environment (
 EPSILON = 40    # the distance away from the goal at which point we consider having arrived
 STOP_SIGN_DELAY = 5000  # the amount of time (in ms) to wait at a stop sign
 PEDESTRIAN_DELAY_INCR = 1000    # the increments of time (in ms) we spend waiting for a pedestrian
+US_RANGE_STEPS = 60 # the range of the US sensor (in inches)
