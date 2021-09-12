@@ -87,9 +87,8 @@ def init_environment():
     return
 
 
-# print the graph (default environment) with rows reversed to match cartesian 
-# coordinates
-def print_graph_to_file(file_name_no_type, graph=environment, reversed=True):
+# print graph with optional rows reversed to match cartesian coordinates
+def print_graph_to_file(file_name_no_type, graph, reversed=True):
     global environment
 
     if reversed:
