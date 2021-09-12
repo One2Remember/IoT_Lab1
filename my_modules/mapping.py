@@ -369,7 +369,7 @@ def main():
         # print environment
         print_environment_to_file("env_after_scan_" + str(num_scans))
         # construct downsized version of environment
-        downsized_environment = downsize_environment(environment)
+        downsized_environment = downsize_environment()
         # construct adjacency matrix from downsized environment
         adjacency_matrix = construct_adjacency_matrix(environment)
         # build graph from matrix
