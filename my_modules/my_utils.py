@@ -92,9 +92,9 @@ def turn(deg):
     deg = deg % 360
     
     # check if we should turn left or right
-    turn_right = True
+    turn_right = False
     if deg >= 180:
-        turn_right = False
+        turn_right = True
         deg = 360 - deg
     # calculate the number of steps to turn (different for left vs right because
     # of misaligned wheels - time should be in ratio of 23:20)
