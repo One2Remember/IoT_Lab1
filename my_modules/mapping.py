@@ -9,6 +9,8 @@ import matplotlib
 import networkx as nx
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import os
+import time
 
 # track environment as 300x290 np array using the following encoding scheme:
 # 0: clear 
@@ -365,6 +367,8 @@ def go_to(next_coordinate):
 def main():
     global EPSILON, ANGLES, DESTINATION, car_location, environment
     
+    cur_time = time.strftime("%m:%d:_%H:%M:%S", time.localtime())
+    os.mkdir(cur_time)
     
     # initialize environment with car and print
     init_environment()
@@ -387,7 +391,7 @@ def main():
         print("performed reading")
         
         # print environment
-        print_graph_to_file("env_after_scan_" + str(num_scans), environment, True)
+        print_graph_to_file(os.path.join(cur_time, "env_after_scan_" + str(num_scans)), environment, True)
         
         print("printed environment")
         
