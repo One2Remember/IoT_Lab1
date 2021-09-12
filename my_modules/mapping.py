@@ -407,15 +407,15 @@ def main():
         # coordinate then to full sized coordinate 
         next_position = shortest_path[0]
         
-        print("next position: " + next_position)
+        print("next position: " + str(next_position))
         
         next_downsized_coord = adjacency_position_to_downsized_coordinates(next_position)
         
-        print("next downsized coord: " + next_downsized_coord)
+        print("next downsized coord: " + str(next_downsized_coord))
         
         next_coordinate = downsized_coordinate_to_full_size_coordinate(next_downsized_coord)
         
-        print("next full coord: " + next_coordinate)
+        print("next full coord: " + str(next_coordinate))
         
         # go to the next coordinate while watching for pedestrians/stop signs
         go_to(next_coordinate)
