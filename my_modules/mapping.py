@@ -210,7 +210,6 @@ def downsize_environment():
 # construct an adjacency matrix from our downsized, 30x30 environment
 def construct_adjacency_matrix(downsized_environment):
     env_size = downsized_environment.size
-    print("env_size: " + str(env_size))
     adjacency_matrix = np.ones((env_size, env_size))
     for a in range(env_size):
         for b in range(a,env_size):
@@ -372,7 +371,7 @@ def main():
         # construct downsized version of environment
         downsized_environment = downsize_environment()
         # construct adjacency matrix from downsized environment
-        adjacency_matrix = construct_adjacency_matrix(environment)
+        adjacency_matrix = construct_adjacency_matrix(downsized_environment)
         # build graph from matrix
         graph = nx.convert_matrix.from_numpy_array(adjacency_matrix)
         # transform the current location coordinates to the corresponding node 
