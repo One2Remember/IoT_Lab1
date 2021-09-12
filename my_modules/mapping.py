@@ -308,7 +308,7 @@ def distance_to(coordinate):
     x_1, y_1 = car_location[0], car_location[1]
     x_2, y_2 = coordinate[0], coordinate[1]
     distance = ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
-    print("distance calculated to goal: " + str(distance))
+    print("distance calculated to next coordinate: " + str(distance))
     return distance
 
 # turn toward a particular coordinate    
@@ -364,7 +364,6 @@ def main():
     
     # initialize environment with car and print
     init_environment()
-    print_graph_to_file("initial_env", environment, True)
     
     # transform the destination to the corresponding node in our downsized 
     # environment's adjacency graph 
@@ -416,7 +415,7 @@ def main():
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
-        next_position = shortest_path[0]
+        next_position = shortest_path[1]
         
         print("next position: " + str(next_position))
         
