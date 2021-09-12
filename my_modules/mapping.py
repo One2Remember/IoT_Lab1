@@ -361,6 +361,12 @@ def go_to(next_coordinate):
 def main():
     global EPSILON, ANGLES, DESTINATION, car_location, environment
     
+    
+    forward_2_5_cm(40)
+    
+    delay(100000)
+    
+    
     # initialize environment with car and print
     init_environment()
     
