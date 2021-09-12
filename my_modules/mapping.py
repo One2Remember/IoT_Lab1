@@ -6,6 +6,7 @@ from my_utils import *  # my utility methods
 from constants import *  # my constant values
 import numpy as np
 import matplotlib
+import networkx as nx
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
