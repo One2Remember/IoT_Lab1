@@ -319,8 +319,7 @@ def turn_toward(coordinate):
     delta_y = coordinate[1] - car_location[1]
     new_heading = np.degrees(np.arctan2(delta_y, delta_x))
     # turn toward that new heading 
-    turn(int(round(new_heading - car_heading)))
-    # set car_heading
+    turn(int(round(new_heading - (car_heading + 90))))
     car_heading = new_heading
 
 # go to the next coordinate, while watching for pedestrians or stop signs
