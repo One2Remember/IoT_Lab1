@@ -327,7 +327,7 @@ def go_to(next_coordinate):
     turn_toward(next_coordinate, car_heading, car_location)
     
     # calculate the number of 2.5cm steps it will take to get from here to there
-    steps = int(math.round(distance_to(DESTINATION) / 2.5))
+    steps = int(round(distance_to(DESTINATION) / 2.5))
     
     # proceed toward that destination while watching for pedestrians or stop signs 
     while steps > 0:
