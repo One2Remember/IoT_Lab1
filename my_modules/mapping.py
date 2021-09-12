@@ -209,10 +209,11 @@ def downsize_environment():
     
 # construct an adjacency matrix from our downsized, 30x30 environment
 def construct_adjacency_matrix(downsized_environment):
-    r,c = downsized_environment.shape
-    adjacency_matrix = np.ones((r*c, r*c))
-    for a in range(r*c):
-        for b in range(a,r*c):
+    env_size = downsized_environment.size
+    print("env_size: " + str(env_size))
+    adjacency_matrix = np.ones((env_size, env_size))
+    for a in range(env_size):
+        for b in range(a,env_size):
             x_1, y_1 = adjacency_position_to_downsized_coordinates(a)
             x_2, y_2 = adjacency_position_to_downsized_coordinates(b)
             if (x_1, y_1) != (x_2, y_2):
