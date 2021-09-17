@@ -54,7 +54,12 @@ def init_car():
     # set car initial location to bottom left corner of room (one car's space away from left wall)
     car_location = np.array([CAR_WIDTH_CM + (CAR_WIDTH_CM // 2), CAR_HEIGHT_CM])
     
+    # some debug messages
+    downsized_loc = full_size_coordinate_to_downsized_coordinate(car_location)
+    node_loc = downsized_coordinate_to_adjacency_position(downsized_loc)
     print("car init position: " + str(car_location))
+    print("downsized: " + str(downsized_loc))
+    print("node #" + str(node_loc))
     
     # set car's initial location
     update_car_position_in_environment()

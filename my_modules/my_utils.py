@@ -76,6 +76,7 @@ def print_readings(readings):
             print("INF", end=' ')
         else:
             print(reading, end=' ')
+    print()
     return
 
 # turns the car any number of degrees in [-inf, inf]
