@@ -454,7 +454,7 @@ def main():
             coord = adjacency_position_to_downsized_coordinates(point)
             x = coord[0]
             y = coord[1]
-            downsized_environment[y][x] = 5
+            downsized_environment[y,x] = 5
         # print environment
         print_graph_to_file(os.path.join(cur_time, "downsized_env_with_path_after_scan_" + str(num_scans)), downsized_environment, True)
             
