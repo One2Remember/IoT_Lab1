@@ -102,7 +102,7 @@ def detect_objects(interpreter, image, threshold):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = 0.5
+  default_threshold = 0.60
 
   labels = load_labels(default_labels)
   label_names = np.array(labels)
@@ -128,10 +128,9 @@ def capture_class(update_detections):
       for _class in label_names:
         if int(_class[0]) in classes:
           detected_labels.append(_class[1])
-          print("potentially detected: " + _class[1])
       
       #person, stop_sign = classification == "person", classification == "stop sign"
-      person = "mouse" in detected_labels
+      person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
       
       update_detections(person, stop_sign) 
