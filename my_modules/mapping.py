@@ -375,9 +375,11 @@ def go_to(next_coordinate):
     while steps > 0:
         # if we see a stop sign, wait for 5 seconds 
         if stop_sign:  
+            print("I see a stop sign, waiting for 5 seconds")
             delay(STOP_SIGN_DELAY)
         # keep waiting for a second as long as there's a pedestrian around
         while pedestrian:
+            print("Waiting for pedestrian...")
             delay(PEDESTRIAN_DELAY_INCR)
         # move forward up to 1 foot (or less if objective is less than 1 foot away)
         if steps <= 12:
