@@ -62,7 +62,7 @@ def init_car():
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
     global environment, stop_sign, pedestrian 
-    global ROOM_HEIGHT_CM, ROOM_WIDTH_CM, DESTINATION, 
+    global ROOM_HEIGHT_CM, ROOM_WIDTH_CM, DESTINATION
     
     # assume no stop sign or pedestrian 
     stop_sign = False 
