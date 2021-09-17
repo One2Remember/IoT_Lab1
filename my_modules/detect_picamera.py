@@ -105,7 +105,8 @@ def capture_class(update_detections):
   default_threshold = .5
 
   labels = load_labels(default_labels)
-  label_names = np.array(labels)
+  label_nums = labels[:0]
+  label_names = labels[:1]  
   
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
@@ -124,13 +125,18 @@ def capture_class(update_detections):
 
       classes, scores = detect_objects(interpreter, image)
       
+      
+      detected_indeces = np.where[scores > default_threshold]
+      detected_classes = classes[detected_indeces].astype(int)
       detected_labels = []
       
-      for i in range(len(classes)):
-        if scores[i] >= default_threshold:
-          detected_labels.append(classes[i][1])
+      for x in detected_classes:
+        index = np.where[label_nums == x]
+        detected_label = label_names[index]
+        detected_labels.append(detected_label)
       
       #for _class in label_names:
+      #  label_names[np.where(label_nums == int(_class[0]))]
       #  if int(_class[0]) in classes:
       #    detected_labels.append(_class[1])
       
