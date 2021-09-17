@@ -105,7 +105,7 @@ def capture_class(update_detections):
   default_threshold = .5
 
   labels = load_labels(default_labels)
-  label_nums = labels[:0]
+  label_nums = labels[:0].astype(int)
   label_names = labels[:1]  
   
   interpreter = Interpreter(default_model)
@@ -127,7 +127,7 @@ def capture_class(update_detections):
       
       
       detected_indeces = np.where(scores > default_threshold, True, False)
-      detected_classes = classes[detected_indeces]
+      detected_classes = classes[detected_indeces].astype(int)
       detected_labels = []
       
       for x in detected_classes:
