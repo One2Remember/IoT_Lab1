@@ -433,6 +433,9 @@ def main():
         
         print("downsized environment")
         
+        # print environment
+        print_graph_to_file(os.path.join(cur_time, "downsized_env_after_scan_" + str(num_scans)), environment, True)
+        
         # construct adjacency matrix from downsized environment
         adjacency_matrix = construct_adjacency_matrix(downsized_environment)
         
@@ -456,7 +459,7 @@ def main():
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
-        next_position = shortest_path[1]
+        next_position = shortest_path[0]
         
         print("next position: " + str(next_position))
         
