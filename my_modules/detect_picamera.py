@@ -105,6 +105,9 @@ def capture_class(update_detections):
   default_threshold = 0.4
 
   labels = load_labels(default_labels)
+  
+  print("labels: " + str(labels))
+  
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
   _, input_height, input_width, _ = interpreter.get_input_details()[0]['shape']
