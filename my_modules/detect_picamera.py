@@ -108,6 +108,9 @@ def capture_class(update_detections):
   label_nums = np.array(labels.keys())
   label_names = np.array(labels.values())
   
+  print(label_nums)
+  print(label_names)
+  
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
   _, input_height, input_width, _ = interpreter.get_input_details()[0]['shape']
