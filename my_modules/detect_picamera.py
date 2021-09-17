@@ -102,7 +102,7 @@ def detect_objects(interpreter, image):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = 5.0
+  default_threshold = .5
 
   labels = load_labels(default_labels)
   label_names = np.array(labels)
