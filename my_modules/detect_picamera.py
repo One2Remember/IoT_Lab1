@@ -44,11 +44,11 @@ def load_labels(path):
     labels = []
     for row_number, content in enumerate(lines):
       pair = re.split(r'[:\s]+', content.strip(), maxsplit=1)
-      if len(pair) == 2 and pair[0].strip().isdigit():
-        labels.append(pair[1].strip())
-      else:
-        labels.append(pair[0].strip())
-  return labels
+      #if len(pair) == 2 and pair[0].strip().isdigit():
+      labels.append(pair[0],pair[1].strip())
+      #else:
+      #  labels.append(pair[0].strip())
+  return np.array(labels)
 
 
 def set_input_tensor(interpreter, image):
@@ -127,20 +127,18 @@ def capture_class(update_detections):
       print("detected classes\n" + str(classes))
       
       detected_labels = []
-      i = 0
       for _class in label_names:
-        if _class in classes:
+        if _class in classes[:1]:
           detected_labels.append(_class)
           print("potentially detected: " + _class)
-        i+=1
       
       #person, stop_sign = classification == "person", classification == "stop sign"
-      person = "person" in detected_labels
+      person = "mouse" in detected_labels
       stop_sign = "stop_sign" in detected_labels
       
       update_detections(person, stop_sign)
-
-      return classification
+      
+    return 
 
     finally:
       stream.seek(0)
