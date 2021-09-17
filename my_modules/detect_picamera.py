@@ -102,11 +102,11 @@ def detect_objects(interpreter, image, threshold):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = 0.4
+  default_threshold = 0.5
 
   labels = load_labels(default_labels)
-  
-  print("labels: " + str(labels))
+  label_nums = np.array(labels.keys())
+  label_names = np.array(labels.values())
   
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
@@ -124,7 +124,14 @@ def capture_class(update_detections):
           (input_width, input_height), Image.ANTIALIAS)
 
       classes, scores = detect_objects(interpreter, image, default_threshold)
-      detected_labels = labels[classes]
+      
+      detected_labels = []
+      i = 0
+      for _class in label_names:
+        if _class in classes:
+          detected_labels.append(_class)
+          print("potentially detected: " + _class)
+        i+=1
       
       
       #classification = highest_score_class(results, labels)
