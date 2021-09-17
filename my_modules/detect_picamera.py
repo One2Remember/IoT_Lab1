@@ -89,7 +89,7 @@ def detect_objects(interpreter, image, threshold):
       
   #print("detection results:\n" + str(results))
   #return results
-  return [int(class) for class in classes], scores 
+  return [int(_class) for _class in classes], scores 
 
 # Returns the classification with the highest score
 #def highest_score_class(results, labels):
