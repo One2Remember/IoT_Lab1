@@ -71,32 +71,31 @@ def detect_objects(interpreter, image, threshold):
   interpreter.invoke()
 
   # Get all output details
-  boxes = get_output_tensor(interpreter, 0)
+  #boxes = get_output_tensor(interpreter, 0)
   classes = get_output_tensor(interpreter, 1)
   scores = get_output_tensor(interpreter, 2)
-  count = int(get_output_tensor(interpreter, 3))
+  #count = int(get_output_tensor(interpreter, 3))
 
-  results = []
-  for i in range(count):
-    if scores[i] >= threshold:
-      result = {
-          'bounding_box': boxes[i],
-          'class_id': classes[i],
-          'score': scores[i]
-      }
-      results.append(result)
+  #results = []
+  #for i in range(count):
+  #  if scores[i] >= threshold:
+  #    result = {
+  #        #'bounding_box': boxes[i],
+  #        'class_id': classes[i],
+   #       'score': scores[i]
+   #   }
+   #   results.append(result)
       
       
-  print("detection results:\n" + str(results))
-  return results
+  #print("detection results:\n" + str(results))
+  #return results
+  return classes, scores 
 
 # Returns the classification with the highest score
-def highest_score_class(results, labels):
-  list_results = results.items()
-  print("list_results:\n" + str(list_results))
-  obj = max(results, key=attrgetter('score'))
-  classification = labels[obj['class_id']]
-  return classification
+#def highest_score_class(results, labels):
+#  obj = max(results, key=attrgetter('score'))
+#  classification = labels[obj['class_id']]
+ # return classification
 
 # Captures an image and returns the classification
 # update to take a method to update variables
@@ -121,10 +120,17 @@ def capture_class(update_detections):
       image = Image.open(stream).convert('RGB').resize(
           (input_width, input_height), Image.ANTIALIAS)
 
-      results = detect_objects(interpreter, image, default_threshold)
-      classification = highest_score_class(results, labels)
+      classes, scores = detect_objects(interpreter, image, default_threshold)
+      detected_labels = labels[classes]
       
-      person, stop_sign = classification == "person", classification == "stop sign"
+      
+      #classification = highest_score_class(results, labels)
+      
+      #person, stop_sign = classification == "person", classification == "stop sign"
+      
+      person = "person" in detected_labels
+      stop_sign = "stop_sign" in detected_labels
+      
       update_detections(person, stop_sign)
       
       print("Classification: " + classification)

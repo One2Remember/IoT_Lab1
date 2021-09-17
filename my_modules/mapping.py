@@ -398,6 +398,13 @@ def update_detections(ped, stop):
     pedestrian = ped 
     stop_sign = stop 
 
+# continuously runs object detection in background    
+def run_object_detection():
+    while True:
+        capture_class(update_detections)
+        time.sleep(0.5)
+    
+
 # protocol to run car
 def main():
     global EPSILON, ANGLES, DESTINATION, car_location, environment
@@ -417,7 +424,7 @@ def main():
     num_scans = 0
     
     # start thread to detect things
-    tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
+    tf_thread = Thread(target=run_object_detection, daemon=True)
     tf_thread.start()
     
     # main loop runs until we reach our goal 
