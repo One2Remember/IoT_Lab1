@@ -65,7 +65,7 @@ def get_output_tensor(interpreter, index):
   return tensor
 
 
-def detect_objects(interpreter, image, threshold):
+def detect_objects(interpreter, image):
   """Returns a list of detection results, each a dictionary of object info."""
   set_input_tensor(interpreter, image)
   interpreter.invoke()
@@ -102,7 +102,7 @@ def detect_objects(interpreter, image, threshold):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = 1.00
+  default_threshold = 5.0
 
   labels = load_labels(default_labels)
   label_names = np.array(labels)
@@ -122,12 +122,17 @@ def capture_class(update_detections):
       image = Image.open(stream).convert('RGB').resize(
           (input_width, input_height), Image.ANTIALIAS)
 
-      classes, scores = detect_objects(interpreter, image, default_threshold)
+      classes, scores = detect_objects(interpreter, image)
       
       detected_labels = []
-      for _class in label_names:
-        if int(_class[0]) in classes:
-          detected_labels.append(_class[1])
+      
+      for i in range(len(classes)):
+        if scores[i] >= default_threshold:
+          detected_labels.append(classes[i][1])
+      
+      #for _class in label_names:
+      #  if int(_class[0]) in classes:
+      #    detected_labels.append(_class[1])
       
       person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
