@@ -426,12 +426,8 @@ def main():
         # print environment
         print_graph_to_file(os.path.join(cur_time, "env_after_scan_" + str(num_scans)), environment, True)
         
-        print("printed environment")
-        
         # construct downsized version of environment
         downsized_environment = downsize_environment()
-        
-        print("downsized environment")
         
         # print environment
         print_graph_to_file(os.path.join(cur_time, "downsized_env_after_scan_" + str(num_scans)), downsized_environment, True)
@@ -439,12 +435,8 @@ def main():
         # construct adjacency matrix from downsized environment
         adjacency_matrix = construct_adjacency_matrix(downsized_environment)
         
-        print("constructed adjacency matrix")
-        
         # build graph from matrix
         graph = nx.convert_matrix.from_numpy_array(adjacency_matrix)
-        
-        print("built graph")
         
         # transform the current location coordinates to the corresponding node 
         # in our downsized environment's adjacency graph 
@@ -456,6 +448,13 @@ def main():
             graph_destination, heuristic=dist_nodes)
             
         print("computed shortest path: " + str(shortest_path))    
+        
+        # DEBUG: slap shortest path onto downsized env map
+        for point in shortest_path:
+            coord = adjacency_position_to_downsized_coordinates(point)
+            downsize_environment[coord[1]][coord[0]] = 5
+        # print environment
+        print_graph_to_file(os.path.join(cur_time, "downsized_env_with_path_after_scan_" + str(num_scans)), downsized_environment, True)
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
