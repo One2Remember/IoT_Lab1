@@ -129,9 +129,11 @@ def capture_class(update_detections):
         if int(_class[0]) in classes:
           detected_labels.append(_class[1])
       
-      #person, stop_sign = classification == "person", classification == "stop sign"
       person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
+      
+      print("Person: " + str(person))
+      print("Stop sign: " + str(stop_sign))
       
       update_detections(person, stop_sign) 
 

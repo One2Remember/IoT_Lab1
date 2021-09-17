@@ -58,8 +58,6 @@ def init_car():
     downsized_loc = full_size_coordinate_to_downsized_coordinate(car_location)
     node_loc = downsized_coordinate_to_adjacency_position(downsized_loc)
     print("car init position: " + str(car_location))
-    print("downsized: " + str(downsized_loc))
-    print("node #" + str(node_loc))
     
     # set car's initial location
     update_car_position_in_environment()
@@ -337,8 +335,6 @@ def turn_toward(coordinate):
     # turn toward that new heading 
     degrees_to_turn = new_heading - car_heading
     
-    print("turning " + str(degrees_to_turn) + " degrees")
-    
     turn(degrees_to_turn)
     car_heading = new_heading
 
@@ -354,8 +350,6 @@ def go_to(next_coordinate):
     # turn toward next coordinate 
     turn_toward(next_coordinate)
     
-    print("turned toward: " + str(next_coordinate))
-    
     # calculate the number of 2.5cm steps it will take to get from here to there
     steps = int(round(distance_to(next_coordinate) / 2.5))
     
@@ -365,11 +359,7 @@ def go_to(next_coordinate):
         steps = steps % US_RANGE_STEPS
         # calculate our new actual destination based on this new distance
         actual_distance = steps * 2.5
-        print("car_location: " + str(car_location))
         actual_destination = np.add(car_location, polar_to_cartesian(actual_distance, np.radians(car_heading)))[0]
-        print("actual_destination: " + str(actual_destination))
-    
-    print("moving 2.5cm steps: " + str(steps))
     
     # proceed toward that destination while watching for pedestrians or stop signs 
     while steps > 0:
@@ -401,9 +391,7 @@ def update_detections(ped, stop):
 # continuously runs object detection in background    
 def run_object_detection():
     while True:
-        print("calling run_object_detection")
         capture_class(update_detections)
-        time.sleep(0.5)
     
 
 # protocol to run car
@@ -458,21 +446,13 @@ def main():
         shortest_path = nx.astar_path(graph, graph_car_location, 
             graph_destination, heuristic=dist_nodes)
             
-        print("computed shortest path: " + str(shortest_path))    
-            
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
         next_position = shortest_path[1]
         
-        print("next position: " + str(next_position))
-        
-        next_downsized_coord = adjacency_position_to_downsized_coordinates(next_position)
-        
-        print("next downsized coord: " + str(next_downsized_coord))
+        next_downsized_coord = adjacency_position_to_downsized_coordinates(next_position)        
         
         next_coordinate = downsized_coordinate_to_full_size_coordinate(next_downsized_coord)
-        
-        print("next full coord: " + str(next_coordinate))
         
         # go to the next coordinate while watching for pedestrians/stop signs
         go_to(next_coordinate)
