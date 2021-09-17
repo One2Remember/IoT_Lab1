@@ -124,12 +124,9 @@ def capture_class(update_detections):
 
       classes, scores = detect_objects(interpreter, image, default_threshold)
       
-      print("detected classes\n" + str(classes))
-      
       detected_labels = []
       for _class in label_names:
-        print("int of class of 1: " + str(int(_class[1])))
-        if int(_class[1]) in classes:
+        if _class[0] in classes:
           detected_labels.append(_class[1])
           print("potentially detected: " + _class[1])
       
