@@ -126,8 +126,8 @@ def capture_class(update_detections):
       classes, scores = detect_objects(interpreter, image)
       
       
-      detected_indeces = np.where(scores > default_threshold)
-      detected_classes = classes[detected_indeces].astype(int)
+      detected_indeces = np.where(scores > default_threshold, True, False)
+      detected_classes = classes[detected_indeces]
       detected_labels = []
       
       for x in detected_classes:
