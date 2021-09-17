@@ -401,6 +401,7 @@ def update_detections(ped, stop):
 # continuously runs object detection in background    
 def run_object_detection():
     while True:
+        print("calling run_object_detection")
         capture_class(update_detections)
         time.sleep(0.5)
     
