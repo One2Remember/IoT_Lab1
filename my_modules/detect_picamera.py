@@ -136,9 +136,7 @@ def capture_class(update_detections):
       person = "mouse" in detected_labels
       stop_sign = "stop_sign" in detected_labels
       
-      update_detections(person, stop_sign)
-      
-    return 
+      update_detections(person, stop_sign) 
 
     finally:
       stream.seek(0)
