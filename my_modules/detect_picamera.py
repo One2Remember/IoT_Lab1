@@ -105,11 +105,7 @@ def capture_class(update_detections):
   default_threshold = 0.5
 
   labels = load_labels(default_labels)
-  #label_nums = np.array(labels.keys())
   label_names = np.array(labels)
-  
-  #print(label_nums)
-  print(label_names)
   
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
@@ -128,6 +124,8 @@ def capture_class(update_detections):
 
       classes, scores = detect_objects(interpreter, image, default_threshold)
       
+      print("detected classes\n" + str(classes))
+      
       detected_labels = []
       i = 0
       for _class in label_names:
@@ -136,17 +134,11 @@ def capture_class(update_detections):
           print("potentially detected: " + _class)
         i+=1
       
-      
-      #classification = highest_score_class(results, labels)
-      
       #person, stop_sign = classification == "person", classification == "stop sign"
-      
       person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
       
       update_detections(person, stop_sign)
-      
-      print("Classification: " + classification)
 
       return classification
 
