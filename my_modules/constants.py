@@ -21,4 +21,4 @@ DOWNSIZED_ENV_SIDE_LENGTH = 15  # the side length of the downsized environment (
 EPSILON = 40    # the distance away from the goal at which point we consider having arrived
 STOP_SIGN_DELAY = 5000  # the amount of time (in ms) to wait at a stop sign
 PEDESTRIAN_DELAY_INCR = 1000    # the increments of time (in ms) we spend waiting for a pedestrian
-US_RANGE_STEPS = 60 # the range of the US sensor (in inches)
+US_RANGE_STEPS = 48 # the range of the US sensor (in inches)
