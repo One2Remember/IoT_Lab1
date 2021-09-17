@@ -458,7 +458,7 @@ def main():
             
         # strip off only the next node in the path and transform it to downsized 
         # coordinate then to full sized coordinate 
-        next_position = shortest_path[0]
+        next_position = shortest_path[1]
         
         print("next position: " + str(next_position))
         
