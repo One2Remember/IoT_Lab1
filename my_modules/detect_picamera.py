@@ -89,7 +89,7 @@ def detect_objects(interpreter, image):
       
   #print("detection results:\n" + str(results))
   #return results
-  return [int(_class) for _class in classes], scores 
+  return np.array([int(_class) for _class in classes]), np.array(scores)
 
 # Returns the classification with the highest score
 #def highest_score_class(results, labels):
