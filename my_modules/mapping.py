@@ -4,6 +4,7 @@ sys.path.append('./**/IoT_Lab1/picar_4wd/')
 import picar_4wd as fc
 from my_utils import *  # my utility methods
 from constants import *  # my constant values
+from detect_picamera import *   # tensorflow code
 import numpy as np
 import matplotlib
 import networkx as nx
@@ -376,6 +377,11 @@ def go_to(next_coordinate):
     car_location = actual_destination
     update_car_position_in_environment()
 
+# update our local detections (takes two bools)
+def update_detections(ped, stop):
+    global pedestrian, stop_sign
+    pedestrian = ped 
+    stop_sign = stop 
 
 # protocol to run car
 def main():
@@ -394,6 +400,10 @@ def main():
 
     # init number of scans we've done to 0
     num_scans = 0
+    
+    # start thread to detect things
+    tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
+    tf_thread.start()
     
     # main loop runs until we reach our goal 
     while distance_to(DESTINATION) > EPSILON:
