@@ -128,9 +128,9 @@ def capture_class(update_detections):
       
       detected_labels = []
       for _class in label_names:
-        if _class in classes[:1]:
-          detected_labels.append(_class)
-          print("potentially detected: " + _class)
+        if _class[1] in classes:
+          detected_labels.append(_class[1])
+          print("potentially detected: " + _class[1])
       
       #person, stop_sign = classification == "person", classification == "stop sign"
       person = "mouse" in detected_labels
