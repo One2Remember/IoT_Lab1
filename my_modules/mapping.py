@@ -452,7 +452,7 @@ def main():
         # DEBUG: slap shortest path onto downsized env map
         for point in shortest_path:
             coord = adjacency_position_to_downsized_coordinates(point)
-            downsize_environment[coord[1]][coord[0]] = 5
+            downsized_environment[coord[1]][coord[0]] = 5
         # print environment
         print_graph_to_file(os.path.join(cur_time, "downsized_env_with_path_after_scan_" + str(num_scans)), downsized_environment, True)
             
