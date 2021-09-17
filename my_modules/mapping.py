@@ -277,7 +277,7 @@ def generate_line_points(a, b):
 # corresponding to that position
 def adjacency_position_to_downsized_coordinates(position):
     global DOWNSIZED_ENV_SIDE_LENGTH
-    return position % DOWNSIZED_ENV_SIDE_LENGTH, position // DOWNSIZED_ENV_SIDE_LENGTH
+    return int(position % DOWNSIZED_ENV_SIDE_LENGTH), int(position // DOWNSIZED_ENV_SIDE_LENGTH)
 
 # transform a downsized coordinate to its appropriate node number in the 
 # adjacency graph    
@@ -452,7 +452,6 @@ def main():
         # DEBUG: slap shortest path onto downsized env map
         for node in shortest_path:
             coord = adjacency_position_to_downsized_coordinates(node)
-            print("coord: " + str(coord))
             downsized_environment[coord] = 8
         # print environment
         print_graph_to_file(os.path.join(cur_time, "downsized_env_with_path_after_scan_" + str(num_scans)), downsized_environment, True)
