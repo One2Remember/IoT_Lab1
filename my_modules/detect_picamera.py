@@ -126,10 +126,7 @@ def capture_class(update_detections):
       
       detected_labels = []
       for _class in label_names:
-        print("TEST")
-        print(_class[0])
-        print(classes)
-        if _class[0] in classes:
+        if int(_class[0]) in classes:
           detected_labels.append(_class[1])
           print("potentially detected: " + _class[1])
       
