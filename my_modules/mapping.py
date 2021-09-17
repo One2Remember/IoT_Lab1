@@ -51,8 +51,8 @@ def init_car():
     global car_heading, car_location
     # set car initial heading to 90 (pointing north)
     car_heading = 90
-    # set car initial location to bottom right corner of room (one car's space away from right wall)
-    car_location = np.array([ROOM_WIDTH_CM - (CAR_WIDTH_CM + (CAR_WIDTH_CM // 2)), CAR_HEIGHT_CM])
+    # set car initial location to bottom right corner of room (two car's space away from right wall)
+    car_location = np.array([ROOM_WIDTH_CM - (2 * CAR_WIDTH_CM + (CAR_WIDTH_CM // 2)), CAR_HEIGHT_CM])
     
     print("car init position: " + str(car_location))
     
@@ -71,10 +71,10 @@ def init_environment():
     # init environment with all zeros
     environment = np.zeros((ROOM_HEIGHT_CM, ROOM_WIDTH_CM))
     # set 4 walls as being obstacles 
-    environment[0] = np.ones(ROOM_WIDTH_CM)
-    environment[-1] = np.ones(ROOM_WIDTH_CM)
-    environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
-    environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
+    #environment[0] = np.ones(ROOM_WIDTH_CM)
+    #environment[-1] = np.ones(ROOM_WIDTH_CM)
+    #environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
+    #environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
 
     # init car position 
     init_car()
