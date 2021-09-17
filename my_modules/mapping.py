@@ -416,8 +416,8 @@ def main():
     num_scans = 0
     
     # start thread to detect things
-    tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
-    tf_thread.start()
+    #tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
+    #tf_thread.start()
     
     # main loop runs until we reach our goal 
     while distance_to(DESTINATION) > EPSILON:
