@@ -319,13 +319,12 @@ def dist_nodes(a,b):
     (x_2,y_2) = adjacency_position_to_downsized_coordinates(b)
     return ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
 
-# compute the distance between the car's current location and the goal    
+# compute the distance between the car's current location and a coordinate   
 def distance_to(coordinate):
     global car_location
     x_1, y_1 = car_location[0], car_location[1]
     x_2, y_2 = coordinate[0], coordinate[1]
     distance = ((x_1 - x_2)**2 + (y_1 - y_2)**2)**0.5
-    print("distance calculated to next coordinate: " + str(distance))
     return distance
 
 # turn toward a particular coordinate    
@@ -416,8 +415,8 @@ def main():
     num_scans = 0
     
     # start thread to detect things
-    #tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
-    #tf_thread.start()
+    tf_thread = Thread(target=capture_class, args=[update_detections], daemon=True)
+    tf_thread.start()
     
     # main loop runs until we reach our goal 
     while distance_to(DESTINATION) > EPSILON:

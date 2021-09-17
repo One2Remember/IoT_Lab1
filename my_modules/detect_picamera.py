@@ -85,6 +85,9 @@ def detect_objects(interpreter, image, threshold):
           'score': scores[i]
       }
       results.append(result)
+      
+      
+  print("detection results:\n" + str(results))
   return results
 
 # Returns the classification with the highest score
@@ -98,7 +101,7 @@ def highest_score_class(results, labels):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = 0.4
+  default_threshold = 0.01
 
   labels = load_labels(default_labels)
   interpreter = Interpreter(default_model)
