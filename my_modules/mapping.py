@@ -45,11 +45,24 @@ global stop_sign
 global pedestrian
 
 
+# init car's position in environment 
+def init_car():
+    global CAR_WIDTH_CM, CAR_HEIGHT_CM, ROOM_WIDTH_CM
+    global car_heading, car_location
+    # set car initial heading to 90 (pointing north)
+    car_heading = 90
+    # set car initial location to bottom right corner of room (one car's space away from right wall)
+    car_location = np.array([ROOM_WIDTH_CM - (CAR_WIDTH_CM + (CAR_WIDTH_CM // 2)), CAR_HEIGHT_CM])
+    
+    print("car init position: " + str(car_location))
+    
+    # set car's initial location
+    update_car_position_in_environment()
+
 # initialize environment as empty room (walls as obstacles)
 def init_environment():
-    # import globs
-    global environment, car_heading, car_location, ROOM_HEIGHT_CM
-    global ROOM_WIDTH_CM, CAR_HEIGHT_CM, DESTINATION, stop_sign, pedestrian
+    global environment, stop_sign, pedestrian 
+    global ROOM_HEIGHT_CM, ROOM_WIDTH_CM, DESTINATION, 
     
     # assume no stop sign or pedestrian 
     stop_sign = False 
@@ -63,12 +76,8 @@ def init_environment():
     environment[:, 0] = np.ones(ROOM_HEIGHT_CM)
     environment[:, -1] = np.ones(ROOM_HEIGHT_CM)
 
-    # set car initial heading to 90 (pointing north)
-    car_heading = 90
-    # set car initial location to bottom right corner of room (one car's space away from left wall)
-    car_location = np.array([CAR_WIDTH_CM + (CAR_WIDTH_CM // 2), CAR_HEIGHT_CM])
-    # set car's initial location
-    update_car_position_in_environment()
+    # init car position 
+    init_car()
 
     # set the destination to a point near the opposite side of the room, and
     # about 3/4 of the way to the right
