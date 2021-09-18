@@ -127,6 +127,9 @@ def capture_class(update_detections):
       
       detected_indeces = np.where(scores > default_threshold, True, False)
       detected_classes = classes[detected_indeces].astype(int)
+      
+      print("detected classes: " + str(detected_classes))
+      
       detected_labels = []
       
       for x in detected_classes:
@@ -135,7 +138,8 @@ def capture_class(update_detections):
         
         print("detected label: " + str(detected_label))
         
-        detected_labels.append(detected_label)
+        if detected_label.size > 0:
+            detected_labels.append(detected_label[0])
       
       print("detected labels: " + str(detected_labels))
       
