@@ -132,6 +132,9 @@ def capture_class(update_detections):
       for x in detected_classes:
         index = np.where(label_nums == x, True, False)
         detected_label = label_names[index]
+        
+        print("detected label: " + str(detected_label))
+        
         detected_labels.append(detected_label)
       
       print("detected labels: " + str(detected_labels))
