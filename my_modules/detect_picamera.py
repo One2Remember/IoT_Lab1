@@ -102,7 +102,7 @@ def detect_objects(interpreter, image):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = .3
+  default_threshold = .5
 
   labels = load_labels(default_labels)
   
@@ -148,7 +148,7 @@ def capture_class(update_detections):
         if detected_label.size > 0:
             detected_labels.append(detected_label[0])
       
-      print("detected labels: " + str(detected_labels))
+      #print("detected labels: " + str(detected_labels))
       
       person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
