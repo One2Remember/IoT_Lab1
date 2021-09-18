@@ -147,8 +147,6 @@ def capture_class(update_detections):
       print("Stop sign: " + str(stop_sign))
       
       update_detections(person, stop_sign
-      
-      return
 
     finally:
       stream.seek(0)
