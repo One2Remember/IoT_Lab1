@@ -45,7 +45,7 @@ def load_labels(path):
     for row_number, content in enumerate(lines):
       pair = re.split(r'[:\s]+', content.strip(), maxsplit=1)
       #if len(pair) == 2 and pair[0].strip().isdigit():
-      labels.append(np.array(int([pair[0].strip()),pair[1].strip()]))
+      labels.append(np.array([int(pair[0].strip()),pair[1].strip()]))
       #else:
       #  labels.append(pair[0].strip())
   return np.array(labels)
