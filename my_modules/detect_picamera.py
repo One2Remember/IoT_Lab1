@@ -108,6 +108,9 @@ def capture_class(update_detections):
   label_nums = labels[:0].astype(int)
   label_names = labels[:1]  
   
+  print("label_nums: " + str(label_nums))
+  print("label_names: " + str(label_names))
+  
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
   _, input_height, input_width, _ = interpreter.get_input_details()[0]['shape']
@@ -134,7 +137,7 @@ def capture_class(update_detections):
       
       for x in detected_classes:
         print("x: " + str(x))
-        index = np.where(int(str(label_nums).strip()) == int(str(x).strip()), True, False)
+        index = np.where(label_nums == int(str(x).strip()), True, False)
         detected_label = label_names[index]
         
         print("detected label: " + str(detected_label))
