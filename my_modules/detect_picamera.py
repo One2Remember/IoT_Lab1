@@ -125,7 +125,6 @@ def capture_class(update_detections):
 
       classes, scores = detect_objects(interpreter, image)
       
-      
       detected_indeces = np.where(scores > default_threshold, True, False)
       detected_classes = classes[detected_indeces].astype(int)
       detected_labels = []
@@ -135,10 +134,7 @@ def capture_class(update_detections):
         detected_label = label_names[index]
         detected_labels.append(detected_label)
       
-      #for _class in label_names:
-      #  label_names[np.where(label_nums == int(_class[0]))]
-      #  if int(_class[0]) in classes:
-      #    detected_labels.append(_class[1])
+      print("detected labels: " + str(detected_labels))
       
       person = "person" in detected_labels
       stop_sign = "stop_sign" in detected_labels
