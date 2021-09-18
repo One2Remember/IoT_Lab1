@@ -45,7 +45,7 @@ def load_labels(path):
     for row_number, content in enumerate(lines):
       pair = re.split(r'[:\s]+', content.strip(), maxsplit=1)
       #if len(pair) == 2 and pair[0].strip().isdigit():
-      labels.append(np.array([pair[0].strip(),pair[1]]))
+      labels.append(np.array(int([pair[0].strip()),pair[1].strip()]))
       #else:
       #  labels.append(pair[0].strip())
   return np.array(labels)
@@ -133,6 +133,7 @@ def capture_class(update_detections):
       detected_labels = []
       
       for x in detected_classes:
+        print("x: " + str(x))
         index = np.where(int(str(label_nums).strip()) == int(str(x).strip()), True, False)
         detected_label = label_names[index]
         
