@@ -102,7 +102,7 @@ def detect_objects(interpreter, image):
 def capture_class(update_detections):
   default_labels = "files/coco_labels.txt"
   default_model = "files/detect.tflite"
-  default_threshold = .5
+  default_threshold = .3
 
   labels = load_labels(default_labels)
   label_nums = labels[:0].astype(int)
@@ -146,7 +146,9 @@ def capture_class(update_detections):
       print("Person: " + str(person))
       print("Stop sign: " + str(stop_sign))
       
-      update_detections(person, stop_sign) 
+      update_detections(person, stop_sign
+      
+      return
 
     finally:
       stream.seek(0)
