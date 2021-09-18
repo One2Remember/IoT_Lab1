@@ -106,13 +106,13 @@ def capture_class(update_detections):
 
   labels = load_labels(default_labels)
   
-  print("labels: " + str(labels))
+  #print("labels: " + str(labels))
   
   label_nums = labels[:,0].astype(int)
   label_names = labels[:,1]  
   
-  print("label_nums: " + str(label_nums))
-  print("label_names: " + str(label_names))
+  #print("label_nums: " + str(label_nums))
+  #print("label_names: " + str(label_names))
   
   interpreter = Interpreter(default_model)
   interpreter.allocate_tensors()
@@ -134,16 +134,16 @@ def capture_class(update_detections):
       detected_indeces = np.where(scores > default_threshold, True, False)
       detected_classes = classes[detected_indeces].astype(int)
       
-      print("detected classes: " + str(detected_classes))
+      #print("detected classes: " + str(detected_classes))
       
       detected_labels = []
       
       for x in detected_classes:
-        print("x: " + str(x))
+        #print("x: " + str(x))
         index = np.where(label_nums == int(str(x).strip()), True, False)
         detected_label = label_names[index]
         
-        print("detected label: " + str(detected_label))
+        #print("detected label: " + str(detected_label))
         
         if detected_label.size > 0:
             detected_labels.append(detected_label[0])
@@ -154,7 +154,7 @@ def capture_class(update_detections):
       stop_sign = "stop_sign" in detected_labels
       
       print("Person: " + str(person))
-      print("Stop sign: " + str(stop_sign))
+      #print("Stop sign: " + str(stop_sign))
       
       update_detections(person, stop_sign)
       

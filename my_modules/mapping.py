@@ -413,8 +413,8 @@ def main():
     num_scans = 0
     
     # start thread to detect things
-    #tf_thread = Thread(target=run_object_detection, daemon=True)
-    #tf_thread.start()
+    tf_thread = Thread(target=run_object_detection, daemon=True)
+    tf_thread.start()
     
     # main loop runs until we reach our goal 
     while distance_to(DESTINATION) > EPSILON:
@@ -424,7 +424,7 @@ def main():
         num_scans += 1
 
         # query tensorflow for a reading
-        capture_class(update_detections)
+        # capture_class(update_detections)
         
         # print environment
         print_graph_to_file(os.path.join(cur_time, "env_after_scan_" + str(num_scans)), environment, True)
