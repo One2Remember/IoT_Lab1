@@ -105,6 +105,9 @@ def capture_class(update_detections):
   default_threshold = .3
 
   labels = load_labels(default_labels)
+  
+  print("labels: " + labels)
+  
   label_nums = labels[:0].astype(int)
   label_names = labels[:1]  
   
