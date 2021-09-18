@@ -108,8 +108,8 @@ def capture_class(update_detections):
   
   print("labels: " + str(labels))
   
-  label_nums = labels[:0].astype(int)
-  label_names = labels[:1]  
+  label_nums = labels[:,0].astype(int)
+  label_names = labels[:,1]  
   
   print("label_nums: " + str(label_nums))
   print("label_names: " + str(label_names))
